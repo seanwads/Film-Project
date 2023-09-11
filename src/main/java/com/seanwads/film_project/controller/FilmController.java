@@ -1,14 +1,11 @@
 package com.seanwads.film_project.controller;
 
 import com.seanwads.film_project.model.Film;
-import com.seanwads.film_project.model.FilmList;
-import com.seanwads.film_project.model.Rating;
 import com.seanwads.film_project.repository.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -18,19 +15,19 @@ public class FilmController {
     private FilmRepository filmRepository;
 
     @GetMapping(path="/allFilms")
-    public @ResponseBody Iterable<FilmList> getAllFilms() {
+    public @ResponseBody Iterable<Film> getAllFilms() {
         return filmRepository.findAll();
     }
 
     @GetMapping(path="/getFilmByID")
-    public @ResponseBody Optional<FilmList> getFilmByID(@RequestParam Integer id){
+    public @ResponseBody Optional<Film> getFilmByID(@RequestParam Integer id){
         return filmRepository.findById(id);
     }
 
     @GetMapping(path="/deleteFilmByID")
     public @ResponseBody String deleteFilmByID(@RequestParam Integer id){
         if(getFilmByID(id).isPresent()){
-            FilmList filmToDelete = getFilmByID(id).get();
+            Film filmToDelete = getFilmByID(id).get();
             String filmTitle = filmToDelete.getTitle();
 
             filmRepository.deleteById(id);
