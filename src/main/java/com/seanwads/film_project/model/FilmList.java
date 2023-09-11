@@ -1,9 +1,6 @@
 package com.seanwads.film_project.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -19,10 +16,18 @@ public class FilmList {
         return filmId;
     }
 
+    public void setFilmId(Integer filmId) {
+        this.filmId = filmId;
+    }
+
     private String title;
 
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     private String description;
@@ -31,10 +36,18 @@ public class FilmList {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     private String category;
 
     public String getCategory() {
         return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     private Double price;
@@ -43,15 +56,29 @@ public class FilmList {
         return price;
     }
 
-    private String rating;
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
-    public String getRating() {
+    @Column (columnDefinition = "ENUM('G', 'PG', 'R', 'PG13', NC17)")
+    @Enumerated(EnumType.STRING)
+    private Rating rating;
+
+    public Rating getRating() {
         return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 
     private String actors;
 
     public String getActors() {
         return actors;
+    }
+
+    public void setActors(String actors) {
+        this.actors = actors;
     }
 }
