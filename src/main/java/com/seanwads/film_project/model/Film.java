@@ -150,7 +150,6 @@ public class Film {
     }
 
     @OneToMany(mappedBy = "filmCat")
-    @JsonIgnore
     private Set<FilmCategory> categorySet = new HashSet<>();
 
     public Set<FilmCategory> getCategorySet() {

@@ -1,25 +1,40 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
 
-function App() {
+export default function App() {
+
+  const[filmResponse, setFilmResponse] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, [])
+
+  async function fetchData() {
+    const response = await fetch('http://localhost:8080/demo/allFilms');
+    const body = await response.json();
+    setFilmResponse(body);
+  }
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <FilmList filmList={ filmResponse } />
       </header>
     </div>
   );
 }
 
-export default App;
+function FilmList({ filmList }){
+  
+  return(
+    <div className='film-list'>
+      {filmList.map(film =>
+        <div key={film.film_id}>
+          {film.title}
+        </div>
+      )}
+    </div>
+  );
+}
