@@ -2,9 +2,11 @@ package com.seanwads.film_project.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.sql.Time;
+import java.util.Set;
 
 @Entity
 @Table(name="category")
@@ -39,4 +41,8 @@ public class Category {
     public void setLast_update(Time last_update) {
         this.last_update = last_update;
     }
+
+    @OneToMany(mappedBy = "category")
+    private Set<FilmCategory> filmCategories;
+    public Set<FilmCategory> getFilmCategories() {return filmCategories;}
 }

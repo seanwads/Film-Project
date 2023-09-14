@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.sql.Time;
 import java.time.Year;
+import java.util.Set;
 
 @Entity
 @Table(name = "film")
@@ -142,4 +143,10 @@ public class Film {
     public void setLast_update(Time last_update) {
         this.last_update = last_update;
     }
+
+    @OneToMany(mappedBy = "film")
+    private Set<FilmCategory> filmCategories;
+    public Set<FilmCategory> getFilmCategories() {return filmCategories;}
+    public void setFilmCategories(Set<FilmCategory> filmCategories) {this.filmCategories = filmCategories;}
+    
 }

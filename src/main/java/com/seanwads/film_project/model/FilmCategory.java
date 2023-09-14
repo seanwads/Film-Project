@@ -5,15 +5,18 @@ import jakarta.persistence.*;
 
 @Table(name = "film_category")
 public class FilmCategory {
-    private Integer film_id;
 
-    public Integer getFilm_id() {
-        return film_id;
+    @ManyToOne
+    @JoinColumn(name="film_id", nullable = false)
+    private Film film;
+
+    public Film getFilm() {
+        return film;
     }
 
-    private Integer category_id;
+    @ManyToOne
+    @JoinColumn(name="category_id", nullable = false)
+    private Category category;
 
-    public Integer getCategory_id() {
-        return category_id;
-    }
+    public Category getCategory() { return category; }
 }
