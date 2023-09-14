@@ -1,25 +1,26 @@
 package com.seanwads.film_project.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 import java.sql.Time;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name="category")
 public class Category {
     @Id
-    private Integer category_id;
+    @Column(name="category_id")
+    private Integer id;
 
-    public Integer getCategory_id() {
-        return category_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCategory_id(Integer category_id) {
-        this.category_id = category_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     private String name;
@@ -42,7 +43,15 @@ public class Category {
         this.last_update = last_update;
     }
 
-    @OneToMany(mappedBy = "category")
-    private Set<FilmCategory> filmCategories;
-    public Set<FilmCategory> getFilmCategories() {return filmCategories;}
+    @OneToMany(mappedBy = "categoryCat")
+    @JsonIgnore
+    private Set<FilmCategory> filmSet = new HashSet<>();
+
+    public Set<FilmCategory> getFilmSet() {
+        return filmSet;
+    }
+
+    public void setFilmSet(Set<FilmCategory> filmSet) {
+        this.filmSet = filmSet;
+    }
 }

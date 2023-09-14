@@ -1,9 +1,14 @@
 package com.seanwads.film_project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.sql.Time;
 import java.time.Year;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,14 +17,14 @@ public class Film {
 
     @Id
     @Column(name="film_id")
-    private Integer filmId;
+    private Integer id;
 
-    public Integer getFilmId() {
-        return filmId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setFilmId(Integer filmId) {
-        this.filmId = filmId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     private String title;
@@ -144,9 +149,15 @@ public class Film {
         this.last_update = last_update;
     }
 
-    @OneToMany(mappedBy = "film")
-    private Set<FilmCategory> filmCategories;
-    public Set<FilmCategory> getFilmCategories() {return filmCategories;}
-    public void setFilmCategories(Set<FilmCategory> filmCategories) {this.filmCategories = filmCategories;}
-    
+    @OneToMany(mappedBy = "filmCat")
+    @JsonIgnore
+    private Set<FilmCategory> categorySet = new HashSet<>();
+
+    public Set<FilmCategory> getCategorySet() {
+        return categorySet;
+    }
+
+    public void setCategorySet(Set<FilmCategory> categorySet) {
+        this.categorySet = categorySet;
+    }
 }
