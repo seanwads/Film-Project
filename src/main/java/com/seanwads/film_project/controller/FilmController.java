@@ -1,12 +1,17 @@
 package com.seanwads.film_project.controller;
 
+import com.seanwads.film_project.model.Category;
 import com.seanwads.film_project.model.Film;
+import com.seanwads.film_project.model.FilmCategory;
 import com.seanwads.film_project.repository.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @Controller
@@ -23,6 +28,38 @@ public class FilmController {
     @GetMapping(path="/getFilmByID")
     public @ResponseBody Optional<Film> getFilmByID(@RequestParam Integer id){
         return filmRepository.findById(id);
+    }
+
+    @GetMapping(path="/filterFilmsByCategory")
+    public@ResponseBody Iterable<Film> filterFilm(@RequestParam Integer id){
+
+        //initialises list with all films
+        Iterable<Film> filmIterable = getAllFilms();
+        List<Film> filmList = new ArrayList<Film>();
+        filmIterable.forEach(filmList::add);
+
+        for (Film film: filmList) {
+
+            //gets categories of current film
+            Set<FilmCategory> categories = film.getCategorySet();
+
+            boolean hasCategory=false;
+
+            for (FilmCategory filmCat: categories) {
+                //gets Category entity
+                Category cat = filmCat.getCategoryCat();
+
+                //checks if category id matches parameter id
+                if(cat.getId() == id){
+                    hasCategory=true;
+                }
+            }
+
+            if(!hasCategory){
+                filmList.remove(film);
+            }
+        }
+        return filmList;
     }
 
     @GetMapping(path="/deleteFilmByID")

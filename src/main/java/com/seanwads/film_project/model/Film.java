@@ -1,6 +1,7 @@
 package com.seanwads.film_project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -150,6 +151,7 @@ public class Film {
     }
 
     @OneToMany(mappedBy = "filmCat")
+    @JsonIgnore
     private Set<FilmCategory> categorySet = new HashSet<>();
 
     public Set<FilmCategory> getCategorySet() {
