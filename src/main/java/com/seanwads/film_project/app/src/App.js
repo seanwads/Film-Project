@@ -6,10 +6,14 @@ import { Navbar, NavbarBrand, Container, Button } from 'reactstrap';
 export default function App() {
 
   const[filmResponse, setFilmResponse] = useState([]);
-  const[filmsToGet, setFilmsToGet] = useState('http://localhost:8080/demo/allFilms');
+  let isLoading = true;
 
   useEffect(() => {
-    fetchData(filmsToGet);
+    if(isLoading){
+      fetchData('http://localhost:8080/demo/allFilms');
+      isLoading=false;
+    }
+    
   }, [])
 
   async function fetchData(link) {
@@ -19,8 +23,7 @@ export default function App() {
   }
 
   function FetchFilteredList(i){
-    // setFilmsToGet('http://localhost:8080/demo/filterFilmsByCategory?id=' + i);
-    // fetchData(filmsToGet);
+    fetchData('http://localhost:8080/demo/filterFilmsByCategory?id=' + i);
   }
 
 
@@ -61,23 +64,23 @@ function FilterBar({ getFilteredList }){
   return(
     <Container fluid>
       <h2>Filter by category:</h2>
-      <Button onClick={getFilter(0)}>All</Button>
-      <Button onClick={getFilter(1)}>Action</Button>
-      <Button onClick={getFilter(2)}>Animation</Button>
-      <Button onClick={getFilter(3)}>Children</Button>
-      <Button onClick={getFilter(4)}>Classics</Button>
-      <Button onClick={getFilter(5)}>Comedy</Button>
-      <Button onClick={getFilter(6)}>Documentary</Button>
-      <Button onClick={getFilter(7)}>Drama</Button>
-      <Button onClick={getFilter(8)}>Family</Button>
-      <Button onClick={getFilter(9)}>Foreign</Button>
-      <Button onClick={getFilter(10)}>Games</Button>
-      <Button onClick={getFilter(11)}>Horror</Button>
-      <Button onClick={getFilter(12)}>Music</Button>
-      <Button onClick={getFilter(13)}>New</Button>
-      <Button onClick={getFilter(14)}>Sci-Fi</Button>
-      <Button onClick={getFilter(15)}>Sports</Button>
-      <Button onClick={getFilter(16)}>Travel</Button>
+      <Button onClick={() => getFilter(0)}>All</Button>
+      <Button onClick={() => getFilter(1)}>Action</Button>
+      <Button onClick={() => getFilter(2)}>Animation</Button>
+      <Button onClick={() => getFilter(3)}>Children</Button>
+      <Button onClick={() => getFilter(4)}>Classics</Button>
+      <Button onClick={() => getFilter(5)}>Comedy</Button>
+      <Button onClick={() => getFilter(6)}>Documentary</Button>
+      <Button onClick={() => getFilter(7)}>Drama</Button>
+      <Button onClick={() => getFilter(8)}>Family</Button>
+      <Button onClick={() => getFilter(9)}>Foreign</Button>
+      <Button onClick={() => getFilter(10)}>Games</Button>
+      <Button onClick={() => getFilter(11)}>Horror</Button>
+      <Button onClick={() => getFilter(12)}>Music</Button>
+      <Button onClick={() => getFilter(13)}>New</Button>
+      <Button onClick={() => getFilter(14)}>Sci-Fi</Button>
+      <Button onClick={() => getFilter(15)}>Sports</Button>
+      <Button onClick={() => getFilter(16)}>Travel</Button>
     </Container>
   )
   
