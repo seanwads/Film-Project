@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Optional;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @Controller
 @RequestMapping("/demo")
@@ -20,4 +22,7 @@ public class CategoryController {
     private @ResponseBody Iterable<Category> getCategories(){
         return categoryRepository.findAll();
     }
+
+    @RequestMapping("/getCatById")
+    private @ResponseBody Optional<Category> getCategoryById(Integer id) {return categoryRepository.findById(id);}
 }

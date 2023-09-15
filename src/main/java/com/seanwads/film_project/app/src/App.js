@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Navbar, NavbarBrand, Container, Button } from 'reactstrap';
+import { Navbar, NavbarBrand, Container, Button, Card, CardBody, CardTitle, CardText, ButtonGroup } from 'reactstrap';
 
 export default function App() {
 
@@ -10,20 +10,20 @@ export default function App() {
 
   useEffect(() => {
     if(isLoading){
-      fetchData('http://localhost:8080/demo/allFilms');
+      fetchFilmData('http://localhost:8080/demo/allFilms');
       isLoading=false;
     }
     
   }, [])
 
-  async function fetchData(link) {
+  async function fetchFilmData(link) {
     const response = await fetch(link);
     const body = await response.json();
     setFilmResponse(body);
   }
 
   function FetchFilteredList(i){
-    fetchData('http://localhost:8080/demo/filterFilmsByCategory?id=' + i);
+    fetchFilmData('http://localhost:8080/demo/filterFilmsByCategory?id=' + i);
   }
 
 
@@ -47,9 +47,17 @@ function FilmList({ filmList }){
   return(
     <div className='film-list'>
       {filmList.map(film =>
-        <div key={film.film_id}>
-          {film.title}
-        </div>
+        <Card key={film.film_id}>
+          <CardBody>
+            <CardTitle>
+              {film.title}
+            </CardTitle>
+
+            <CardText>
+              {film.description}
+            </CardText>
+          </CardBody>
+        </Card>
       )}
     </div>
   );
@@ -61,27 +69,140 @@ function FilterBar({ getFilteredList }){
     getFilteredList(i);
   }
 
+  const [rSelected, setRSelected] = useState(null);
+
   return(
     <Container fluid>
       <h2>Filter by category:</h2>
-      <Button onClick={() => getFilter(0)}>All</Button>
-      <Button onClick={() => getFilter(1)}>Action</Button>
-      <Button onClick={() => getFilter(2)}>Animation</Button>
-      <Button onClick={() => getFilter(3)}>Children</Button>
-      <Button onClick={() => getFilter(4)}>Classics</Button>
-      <Button onClick={() => getFilter(5)}>Comedy</Button>
-      <Button onClick={() => getFilter(6)}>Documentary</Button>
-      <Button onClick={() => getFilter(7)}>Drama</Button>
-      <Button onClick={() => getFilter(8)}>Family</Button>
-      <Button onClick={() => getFilter(9)}>Foreign</Button>
-      <Button onClick={() => getFilter(10)}>Games</Button>
-      <Button onClick={() => getFilter(11)}>Horror</Button>
-      <Button onClick={() => getFilter(12)}>Music</Button>
-      <Button onClick={() => getFilter(13)}>New</Button>
-      <Button onClick={() => getFilter(14)}>Sci-Fi</Button>
-      <Button onClick={() => getFilter(15)}>Sports</Button>
-      <Button onClick={() => getFilter(16)}>Travel</Button>
+      <ButtonGroup>
+        <FilterButton 
+          clickGetFilter={() => getFilter(0)} 
+          clickSelected={() => setRSelected(0)} 
+          categoryName={"All"}
+          categoryId={0}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(1)} 
+          clickSelected={() => setRSelected(1)} 
+          categoryName={"Action"}
+          categoryId={1}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(2)} 
+          clickSelected={() => setRSelected(2)} 
+          categoryName={"Adventure"}
+          categoryId={2}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(3)} 
+          clickSelected={() => setRSelected(3)} 
+          categoryName={"Children"}
+          categoryId={3}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(4)} 
+          clickSelected={() => setRSelected(4)} 
+          categoryName={"Classics"}
+          categoryId={4}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(5)} 
+          clickSelected={() => setRSelected(5)} 
+          categoryName={"Comedy"}
+          categoryId={5}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(6)} 
+          clickSelected={() => setRSelected(6)} 
+          categoryName={"Documentary"}
+          categoryId={6}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(7)} 
+          clickSelected={() => setRSelected(7)} 
+          categoryName={"Drama"}
+          categoryId={7}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(8)} 
+          clickSelected={() => setRSelected(8)} 
+          categoryName={"Family"}
+          categoryId={8}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(9)} 
+          clickSelected={() => setRSelected(9)} 
+          categoryName={"Foreign"}
+          categoryId={9}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(10)} 
+          clickSelected={() => setRSelected(10)} 
+          categoryName={"Games"}
+          categoryId={10}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(11)} 
+          clickSelected={() => setRSelected(11)} 
+          categoryName={"Horror"}
+          categoryId={10}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(12)} 
+          clickSelected={() => setRSelected(12)} 
+          categoryName={"Music"}
+          categoryId={12}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(13)} 
+          clickSelected={() => setRSelected(13)} 
+          categoryName={"New"}
+          categoryId={13}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(14)} 
+          clickSelected={() => setRSelected(14)} 
+          categoryName={"Sci-Fi"}
+          categoryId={14}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(15)} 
+          clickSelected={() => setRSelected(15)} 
+          categoryName={"Sports"}
+          categoryId={15}
+          isSelected={rSelected}/>
+        <FilterButton 
+          clickGetFilter={() => getFilter(16)} 
+          clickSelected={() => setRSelected(16)} 
+          categoryName={"Travel"}
+          categoryId={16}
+          isSelected={rSelected}/>
+      </ButtonGroup>
+      
     </Container>
+  )
+}
+
+function FilterButton({ clickGetFilter, clickSelected, categoryName, categoryId, isSelected}){
+
+  function handleClick(filter, selected){
+    filter();
+    selected();
+  }
+
+  return(
+    <Button 
+      className='filterButton'
+      color="primary"
+      outline
+      onClick={() => {handleClick(clickGetFilter, clickSelected)}}
+      active={isSelected===categoryId}
+      >
+        <div className='category-name'>
+          {categoryName}
+        </div>
+
+      </Button>
   )
   
 }
