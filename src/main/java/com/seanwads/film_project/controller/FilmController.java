@@ -127,7 +127,17 @@ public class FilmController {
     }
 
     @PutMapping(path="/updateFilm")
-    public @ResponseBody Optional<Film> updateFilm(@RequestParam Integer id){
-        return Optional.empty();
+    public @ResponseBody Optional<Film> updateFilm(@RequestBody Film filmParam){
+        Optional<Film> filmOptional = getFilmByID(filmParam.getId());
+
+        if(filmOptional.isPresent()){
+            Film film = filmOptional.get();
+            film.setTitle(filmParam.getTitle());
+            filmRepository.save(film);
+            return Optional.of(film);
+        }
+        else {
+            return Optional.empty();
+        }
     }
 }

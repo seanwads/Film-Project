@@ -58,16 +58,33 @@ function FilmList({ filmList }){
 function FilmCard({ idKey, filmInfo }){
 
   const initialUpdateDiv = (" ");
+
   const[updateDiv, setUpdateDiv] = useState(initialUpdateDiv);
+
   let updateActive = false;
 
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    await fetch('http://localhost:8080/demo/updateFilm', {
+      method:'PUT',
+      headers:{'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        "id": filmInfo.id,
+        "title": event.target.nameEditInput.value,
+        "description": filmInfo.description,
+        "year": filmInfo.year,
+        "language_id": filmInfo.language_id
+      })
+
+    });
+    window.location.reload();
   }
 
 
-  async function deleteFilm(id){
-    await fetch('http://localhost:8080/demo/deleteFilm?id=' + id, {method:'DELETE'});
+  async function deleteFilm(){
+    await fetch('http://localhost:8080/demo/deleteFilm?id=' + filmInfo.id, {method:'DELETE'});
+    window.location.reload();
   }
 
   async function updateFilm(){
@@ -80,8 +97,8 @@ function FilmCard({ idKey, filmInfo }){
       setUpdateDiv(
         <Form inline onSubmit={handleSubmit}>
             <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-              <Label for="name_edit_input" className='mr-sm-2'>Change Title:</Label>
-              <Input type="number" name="name_edit_input" id="name_edit_input"/>
+              <Label for="nameEditInput" className='mr-sm-2'>Change Title:</Label>
+              <Input type="text" name="nameEditInput" id="nameEditInput"/>
             </FormGroup>
             <Button type='submit'>Submit</Button>
           </Form>
@@ -91,10 +108,10 @@ function FilmCard({ idKey, filmInfo }){
   }
   
   return(
-    <Card key={idKey}>
+    <Card key={filmInfo.id}>
     <CardBody>
             <CardTitle>
-              {filmInfo.title}
+              {filmInfo.id}. {filmInfo.title}
             </CardTitle>
             <CardText>
               {filmInfo.description}
