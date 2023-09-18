@@ -1,15 +1,11 @@
 package com.seanwads.film_project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.sql.Time;
 import java.time.Year;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -150,7 +146,7 @@ public class Film {
         this.last_update = last_update;
     }
 
-    @OneToMany(mappedBy = "filmCat")
+    @OneToMany(mappedBy = "filmCat", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true )
     @JsonIgnore
     private Set<FilmCategory> categorySet = new HashSet<>();
 
@@ -160,5 +156,43 @@ public class Film {
 
     public void setCategorySet(Set<FilmCategory> categorySet) {
         this.categorySet = categorySet;
+    }
+
+
+    @OneToMany(mappedBy ="film", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true )
+    @JsonIgnore
+    private Set<FilmActor> actors;
+
+    public Set<FilmActor> getActors(){return actors;}
+    public void setActors(Set<FilmActor> actors){
+        this.actors = actors;
+    }
+
+
+
+    Film(){
+
+    }
+
+    public Film(
+            Integer id,
+            String title,
+            String description,
+            Year releaseYear,
+            Integer languageId
+    ){
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.release_year = releaseYear;
+        this.language_id = languageId;
+    }
+
+    public void detachCategories(){
+        this.categorySet.removeAll(getCategorySet());
+    }
+
+    public void detachActors(){
+        this.actors.removeAll(getActors());
     }
 }

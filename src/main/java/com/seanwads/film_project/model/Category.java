@@ -44,7 +44,7 @@ public class Category {
         this.last_update = last_update;
     }
 
-    @OneToMany(mappedBy = "categoryCat")
+    @OneToMany(mappedBy = "categoryCat", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
     @JsonIgnore
     private Set<FilmCategory> filmSet = new HashSet<>();
 
