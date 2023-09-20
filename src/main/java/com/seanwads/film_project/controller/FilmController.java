@@ -96,10 +96,15 @@ public class FilmController {
     }
 
     @GetMapping(path="/nextID")
-    public @ResponseBody Optional<Long> nextId(){
-        Long count = filmRepository.count();
-        count ++;
-        return Optional.of(count);
+    public @ResponseBody Integer nextId(){
+        Iterable<Film> films = getAllFilms();
+        List<Film> filmList = new ArrayList<Film>();
+        films.forEach(filmList::add);
+
+        Film lastFilm = filmList.get(filmList.size() - 1);
+        Integer lastId = lastFilm.getId();
+
+        return lastId + 1;
     }
 
     @DeleteMapping(path="/deleteFilm")

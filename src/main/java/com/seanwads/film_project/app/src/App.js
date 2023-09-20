@@ -19,6 +19,7 @@ export default function App() {
     
   }, [])
 
+
   async function fetchFilmData(link) {
     const response = await fetch(link);
     const body = await response.json();
@@ -28,7 +29,6 @@ export default function App() {
   function FetchFilteredList(i){
     fetchFilmData('http://localhost:8080/demo/filterFilmsByCategory?id=' + i);
   }
-
 
   return (
     <div className="App">
@@ -42,22 +42,17 @@ export default function App() {
 
       <div className='film-list'>
       <AddCard 
-        totalFilms={filmResponse}
         updateFilms={() => FetchFilteredList(0)}
         />
 
       { filmResponse.map(film =>
         <FilmCard 
         filmInfo={film}
-          fetchFilms={() => FetchFilteredList(0)} 
+          fetchFilms={() => FetchFilteredList(0)}
           />
       )}
     </div>
-
-      </div>
+    </div>
     </div>
   );
 }
-
-
-

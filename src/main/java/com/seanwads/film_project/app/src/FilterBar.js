@@ -120,30 +120,31 @@ export default function FilterBar({ getFilteredList }){
         
       </Container>
     )
-  }
+}
   
-  //individual filter button as part of overall filter bar
-  function FilterButton({ clickGetFilter, clickSelected, categoryName, categoryId, isSelected}){
-  
-    function handleClick(filter, selected, setFilterState){
-      filter();
-      selected();
-    }
-  
-    return(
-  
-      <Button 
-        className='filterButton'
-        color="primary"
-        size='sm'
-        outline
-        onClick={() => {handleClick(clickGetFilter, clickSelected)}}
-        active={isSelected===categoryId}
-        >
-          <div className='category-name'>
-            {categoryName}
-          </div>
-  
-        </Button>
-    )
-  }
+
+//individual filter button as part of overall filter bar
+function FilterButton({ clickGetFilter, clickSelected, categoryName, categoryId, isSelected}){
+
+function handleClick(filter, selected, setFilterState){
+    filter();
+    selected();
+}
+
+return(
+
+    <Button 
+    className='filterButton'
+    color="primary"
+    size='sm'
+    outline
+    onClick={() => {handleClick(clickGetFilter, clickSelected)}}
+    active={isSelected===categoryId}
+    >
+        <div className='category-name'>
+        {categoryName}
+        </div>
+
+    </Button>
+)
+}
