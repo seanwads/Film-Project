@@ -49,7 +49,7 @@ public class FilmController {
                 for (FilmCategory filmCat : filmCategories) {
                     Category category = filmCat.getCategoryCat();
 
-                    if (category.getId() == id) {
+                    if (category.getId().equals(id)) {
                         hasFilterCategory = true;
                     }
                 }
@@ -81,7 +81,7 @@ public class FilmController {
     @PostMapping(path="/createFilm")
     public @ResponseBody Optional<Film> createFilm(@RequestBody Film filmParam){
         try{
-            Film film = filmRepository.save(new Film(filmParam.getId(), filmParam.getTitle(), filmParam.getDescription(), filmParam.getRelease_year(), filmParam.getLanguage_id()));
+            Film film = filmRepository.save(new Film(filmParam.getId(), filmParam.getTitle(), filmParam.getDescription(), filmParam.getReleaseYear(), filmParam.getLanguageId()));
 
             if(getFilmByID(film.getId()).isPresent()){
                 return Optional.of(film);
@@ -109,7 +109,9 @@ public class FilmController {
 
     @DeleteMapping(path="/deleteFilm")
     public @ResponseBody Optional<Film> deleteFilm(@RequestParam Integer id){
-        try{
+
+        if(getFilmByID(id).isPresent()){
+
             Film film = getFilmByID(id).get();
             film.detachCategories();
             film.detachActors();
@@ -118,15 +120,13 @@ public class FilmController {
             Optional<Film> deletedFilm = getFilmByID(id);
 
             if(deletedFilm.isEmpty()){
-                System.out.println("successfully deleted");
                 return deletedFilm;
             }
             else{
-                System.out.println("Failed to delete film");
                 return Optional.empty();
             }
-        } catch (Exception e){
-            System.out.println("Failed to delete film");
+        }
+        else{
             return Optional.empty();
         }
     }

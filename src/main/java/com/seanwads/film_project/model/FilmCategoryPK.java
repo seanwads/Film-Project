@@ -3,30 +3,29 @@ package com.seanwads.film_project.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.sql.Time;
 
 @Embeddable
 public class FilmCategoryPK implements Serializable {
 
     @Column(name="film_id")
-    private Integer film_id;
+    private Integer filmId;
 
-    public Integer getFilm_id() {
-        return film_id;
+    public Integer getFilmId() {
+        return filmId;
     }
 
-    public void setFilm_id(Integer film_id) {
-        this.film_id = film_id;
+    public void setFilmId(Integer filmId) {
+        this.filmId = filmId;
     }
 
     @Column(name="category_id")
-    private Integer category_id;
+    private Integer categoryId;
 
-    public Integer getCategory_id() {
-        return category_id;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory_id(Integer category_id) {
-        this.category_id = category_id;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 }

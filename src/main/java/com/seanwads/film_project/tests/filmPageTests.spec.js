@@ -53,11 +53,11 @@ test('edit film', async({ page }) => {
         .click(); 
     
     //Fill update input field and submit
-    await page.getByRole('textbox').fill('TEST_PLACEHOLDER');
+    await page.getByRole('textbox').fill('EDIT_TEST_PLACEHOLDER');
     await page.getByRole('button', {name:'Submit'}).click();
 
     //Assert that film has been edited and page has been updated
-    await expect(page.getByText('TEST_PLACEHOLDER')).toBeVisible();
+    await expect(page.getByText('EDIT_TEST_PLACEHOLDER')).toBeVisible();
 
     //Open update menu for first film in list
     await page
@@ -68,4 +68,45 @@ test('edit film', async({ page }) => {
     //Reset film name to original
     await page.getByRole('textbox').fill('ABSOLUTE DINOSAUR');
     await page.getByRole('button', {name:'Submit'}).click();
+})
+
+test('create film', async({ page }) => {
+    await page.goto('http://localhost:3000/');
+
+    //Assert that add film menu is not open on load
+    await expect(page.getByRole('textbox')).toBeHidden();
+
+    //Open add film menu
+    await page.getByRole('button', {name:'Add'}).click();
+
+    //Fill add film menu and submit
+    await page.getByTestId('title-input').fill('CREATE_TEST_PLACEHOLDER_TITLE');
+    await page.getByTestId('desc-input').fill('CREATE_TEST_PLACEHOLDER_DESC');
+    await page.getByTestId('year-input').fill('2000');
+    await page.getByRole('button', {name:'Submit'}).click();
+
+    //Assert that film has been created and page has been updated with title
+    await expect(page
+            .locator('.card-title')
+            .getByText('CREATE_TEST_PLACEHOLDER_TITLE'))
+            .toBeVisible();
+
+    //Assert that page has been updated with description
+    await expect(page
+            .locator('.card-text')
+            .getByText('CREATE_TEST_PLACEHOLDER_DESC'))
+            .toBeVisible();
+})
+
+test('delete film', async({ page }) => {
+    await page.goto('http://localhost:3000/');
+
+    //Click delete button for most recently created film (film created in 'create film' test)
+    await page
+        .getByRole('button',{name:'Delete'})
+        .last()
+        .click();
+
+    //Assert that test film has been deleted
+    await expect(page.getByText('CREATE_TEST_PLACEHOLDER_TITLE')).toBeHidden();
 })

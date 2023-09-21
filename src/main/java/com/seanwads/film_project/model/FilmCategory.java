@@ -46,13 +46,14 @@ public class FilmCategory implements Serializable {
         this.id = id;
     }
 
-    private Time last_update;
+    @Column(name = "last_update")
+    private Time lastUpdate;
 
-    public Time getLast_update() {
-        return last_update;
+    public Time getLastUpdate() {
+        return lastUpdate;
     }
 
-    public void setLast_update(Time last_update) {
-        this.last_update = last_update;
+    public void setLastUpdate(Time lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }

@@ -1,8 +1,6 @@
 package com.seanwads.film_project.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.sql.Time;
@@ -34,14 +32,15 @@ public class Category {
         this.name = name;
     }
 
-    private Time last_update;
+    @Column(name = "last_update")
+    private Time lastUpdate;
 
-    public Time getLast_update() {
-        return last_update;
+    public Time getLastUpdate() {
+        return lastUpdate;
     }
 
-    public void setLast_update(Time last_update) {
-        this.last_update = last_update;
+    public void setLastUpdate(Time lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     @OneToMany(mappedBy = "categoryCat", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})

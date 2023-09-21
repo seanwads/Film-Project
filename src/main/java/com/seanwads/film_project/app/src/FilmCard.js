@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Navbar, NavbarBrand, Container, Button, Card, CardBody, CardTitle, CardText, ButtonGroup, Form, FormGroup, Label, Input } from 'reactstrap';
+import {  useState } from 'react';
+import { Button, Card, CardBody, CardTitle, CardText, ButtonGroup, Form, FormGroup, Label, Input } from 'reactstrap';
 
 export default function FilmCard({ filmInfo, fetchFilms, updateCardCount }){
   
@@ -48,7 +48,7 @@ function InfoCard({ film, updateFilm, fetchFilmList }){
 
                 <ButtonGroup>
                 <Button color='primary' outline onClick={() => updateFilm(film.id)}>Update</Button>
-                <Button color='danger' outline onClick={() => deleteFilm(film.id)}>Delete</Button>
+                <Button color='danger' outline onClick={() => deleteFilm()}>Delete</Button>
                 </ButtonGroup>
 
             </CardBody>

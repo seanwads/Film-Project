@@ -44,54 +44,59 @@ public class Film {
         this.description = description;
     }
 
-    private Year release_year;
+    @Column(name = "release_year")
+    private Year releaseYear;
 
-    public Year getRelease_year() {
-        return release_year;
+    public Year getReleaseYear() {
+        return releaseYear;
     }
 
-    public void setRelease_year(Year release_year) {
-        this.release_year = release_year;
+    public void setReleaseYear(Year releaseYear) {
+        this.releaseYear = releaseYear;
     }
 
-    private Integer language_id;
+    @Column(name = "language_id")
+    private Integer languageId;
 
-    public Integer getLanguage_id() {
-        return language_id;
+    public Integer getLanguageId() {
+        return languageId;
     }
 
-    public void setLanguage_id(Integer language_id) {
-        this.language_id = language_id;
+    public void setLanguageId(Integer languageId) {
+        this.languageId = languageId;
     }
 
-    private Integer original_language_id;
+    @Column(name = "original_language_id")
+    private Integer originalLanguageId;
 
-    public Integer getOriginal_language_id() {
-        return original_language_id;
+    public Integer getOriginalLanguageId() {
+        return originalLanguageId;
     }
 
-    public void setOriginal_language_id(Integer original_language_id) {
-        this.original_language_id = original_language_id;
+    public void setOriginalLanguageId(Integer originalLanguageId) {
+        this.originalLanguageId = originalLanguageId;
     }
 
-    private Integer rental_duration;
+    @Column(name = "rental_duration")
+    private Integer rentalDuration;
 
-    public Integer getRental_duration() {
-        return rental_duration;
+    public Integer getRentalDuration() {
+        return rentalDuration;
     }
 
-    public void setRental_duration(Integer rental_duration) {
-        this.rental_duration = rental_duration;
+    public void setRentalDuration(Integer rentalDuration) {
+        this.rentalDuration = rentalDuration;
     }
 
-    private Double rental_rate;
+    @Column(name = "rental_rate")
+    private Double rentalRate;
 
-    public Double getRental_rate() {
-        return rental_rate;
+    public Double getRentalRate() {
+        return rentalRate;
     }
 
-    public void setRental_rate(Double rental_rate) {
-        this.rental_rate = rental_rate;
+    public void setRentalRate(Double rentalRate) {
+        this.rentalRate = rentalRate;
     }
 
     private Integer length;
@@ -104,14 +109,15 @@ public class Film {
         this.length = length;
     }
 
-    private Double replacement_cost;
+    @Column(name = "replacement_cost")
+    private Double replacementCost;
 
-    public Double getReplacement_cost() {
-        return replacement_cost;
+    public Double getReplacementCost() {
+        return replacementCost;
     }
 
-    public void setReplacement_cost(Double replacement_cost) {
-        this.replacement_cost = replacement_cost;
+    public void setReplacementCost(Double replacementCost) {
+        this.replacementCost = replacementCost;
     }
 
     @Column (columnDefinition = "ENUM('G', 'PG', 'R', 'PG13', NC17)")
@@ -126,24 +132,26 @@ public class Film {
         this.rating = rating;
     }
 
-    private String special_features;
+    @Column(name = "special_features")
+    private String specialFeatures;
 
-    public String getSpecial_features() {
-        return special_features;
+    public String getSpecialFeatures() {
+        return specialFeatures;
     }
 
-    public void setSpecial_features(String special_features) {
-        this.special_features = special_features;
+    public void setSpecialFeatures(String specialFeatures) {
+        this.specialFeatures = specialFeatures;
     }
 
-    private Time last_update;
+    @Column(name = "last_update")
+    private Time lastUpdate;
 
-    public Time getLast_update() {
-        return last_update;
+    public Time getLastUpdate() {
+        return lastUpdate;
     }
 
-    public void setLast_update(Time last_update) {
-        this.last_update = last_update;
+    public void setLastUpdate(Time lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     @OneToMany(mappedBy = "filmCat", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true )
@@ -184,8 +192,8 @@ public class Film {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.release_year = releaseYear;
-        this.language_id = languageId;
+        this.releaseYear = releaseYear;
+        this.languageId = languageId;
     }
 
     public void detachCategories(){

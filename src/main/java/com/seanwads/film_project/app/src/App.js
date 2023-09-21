@@ -1,7 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Navbar, NavbarBrand, Container, Button, Card, CardBody, CardTitle, CardText, ButtonGroup, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Navbar, NavbarBrand } from 'reactstrap';
 import FilmCard from './FilmCard';
 import FilterBar from './FilterBar';
 import AddCard from './AddCard';
@@ -46,7 +45,7 @@ export default function App() {
         />
 
       { filmResponse.map(film =>
-        <FilmCard 
+        <FilmCard key={film.id}
         filmInfo={film}
           fetchFilms={() => FetchFilteredList(0)}
           />

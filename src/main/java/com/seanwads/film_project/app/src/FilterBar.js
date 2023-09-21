@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Navbar, NavbarBrand, Container, Button, Card, CardBody, CardTitle, CardText, ButtonGroup, Form, FormGroup, Label, Input } from 'reactstrap';
+import {  useState } from 'react';
+import { Container, Button, ButtonGroup } from 'reactstrap';
 
 export default function FilterBar({ getFilteredList }){
 
