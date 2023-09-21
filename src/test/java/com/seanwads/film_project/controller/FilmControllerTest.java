@@ -33,13 +33,7 @@ class FilmControllerTest {
 
     @MockBean
     FilmRepository filmRepository;
-
-
-//    @Test
-//    void getAllFilms() {
-//
-//    }
-
+    
     @Test
     void getFilmByID() throws Exception {
         Integer id = 1;
