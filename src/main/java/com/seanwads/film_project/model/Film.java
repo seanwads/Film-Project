@@ -45,13 +45,13 @@ public class Film {
     }
 
     @Column(name = "release_year")
-    private Year releaseYear;
+    private Integer releaseYear;
 
-    public Year getReleaseYear() {
+    public Integer getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(Year releaseYear) {
+    public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
     }
 
@@ -186,7 +186,7 @@ public class Film {
             Integer id,
             String title,
             String description,
-            Year releaseYear,
+            Integer releaseYear,
             Integer languageId
     ){
         this.id = id;

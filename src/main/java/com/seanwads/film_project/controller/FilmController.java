@@ -24,11 +24,9 @@ public class FilmController {
 
     @GetMapping(path = "/getFilmByID")
     public @ResponseBody Optional<Film> getFilmByID(@RequestParam Integer id) {
+
         return filmRepository.findById(id);
     }
-
-
-    //adding this so i can push
 
     @GetMapping(path = "/filterFilmsByCategory")
     public @ResponseBody Iterable<Film> filterFilm(@RequestParam Integer id) {
