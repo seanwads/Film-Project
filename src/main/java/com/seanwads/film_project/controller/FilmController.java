@@ -81,7 +81,12 @@ public class FilmController {
     @PostMapping(path="/createFilm")
     public @ResponseBody Optional<Film> createFilm(@RequestBody Film filmParam){
         try{
-            Film film = filmRepository.save(new Film(filmParam.getId(), filmParam.getTitle(), filmParam.getDescription(), filmParam.getReleaseYear(), filmParam.getLanguageId()));
+            Film film = filmRepository.save(new Film());
+            film.setId(film.getId());
+            film.setTitle(filmParam.getTitle());
+            film.setDescription(filmParam.getDescription());
+            film.setReleaseYear(filmParam.getReleaseYear());
+            film.setLanguageId(filmParam.getLanguageId());
 
             if(getFilmByID(film.getId()).isPresent()){
                 return Optional.of(film);

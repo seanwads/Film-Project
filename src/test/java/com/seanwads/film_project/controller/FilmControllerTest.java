@@ -37,9 +37,12 @@ class FilmControllerTest {
     @Test
     void getFilmByID() throws Exception {
         Integer id = 1;
-        Film film = new Film(id, "ABSOLUTE DINOSAUR",
-                "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies",
-                2006, 1);
+        Film film = new Film();
+        film.setId(id);
+        film.setTitle("ABSOLUTE DINOSAUR");
+        film.setDescription("A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies");
+        film.setReleaseYear(2006);
+        film.setLanguageId(1);
 
         when(filmRepository.findById(id)).thenReturn(Optional.of(film));
 
