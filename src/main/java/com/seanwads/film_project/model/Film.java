@@ -24,6 +24,7 @@ public class Film {
         this.id = id;
     }
 
+    @Column(name = "title")
     private String title;
 
     public String getTitle() {
@@ -34,6 +35,7 @@ public class Film {
         this.title = title;
     }
 
+    @Column(name = "description")
     private String description;
 
     public String getDescription() {
@@ -99,6 +101,7 @@ public class Film {
         this.rentalRate = rentalRate;
     }
 
+    @Column(name = "length")
     private Integer length;
 
     public Integer getLength() {
@@ -120,7 +123,7 @@ public class Film {
         this.replacementCost = replacementCost;
     }
 
-    @Column (columnDefinition = "ENUM('G', 'PG', 'R', 'PG13', NC17)")
+    @Column (columnDefinition = "ENUM('G', 'PG', 'R', 'PG13', NC17)", name = "rating")
     @Enumerated(EnumType.STRING)
     private Rating rating;
 
@@ -156,14 +159,14 @@ public class Film {
 
     @OneToMany(mappedBy = "filmCat", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true )
     @JsonIgnore
-    private Set<FilmCategory> categorySet = new HashSet<>();
+    private Set<FilmCategory> categories = new HashSet<>();
 
     public Set<FilmCategory> getCategorySet() {
-        return categorySet;
+        return categories;
     }
 
     public void setCategorySet(Set<FilmCategory> categorySet) {
-        this.categorySet = categorySet;
+        this.categories = categorySet;
     }
 
 
@@ -194,13 +197,5 @@ public class Film {
         this.description = description;
         this.releaseYear = releaseYear;
         this.languageId = languageId;
-    }
-
-    public void detachCategories(){
-        this.categorySet.removeAll(getCategorySet());
-    }
-
-    public void detachActors(){
-        this.actors.removeAll(getActors());
     }
 }

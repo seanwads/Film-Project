@@ -113,8 +113,6 @@ public class FilmController {
         if(getFilmByID(id).isPresent()){
 
             Film film = getFilmByID(id).get();
-            film.detachCategories();
-            film.detachActors();
             filmRepository.deleteById(id);
 
             Optional<Film> deletedFilm = getFilmByID(id);
