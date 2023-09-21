@@ -1,0 +1,252 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > FilmController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.seanwads.film_project.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: FilmController (com.seanwads.film_project.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FilmController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    11.1%
+  </span>
+  <span class="absValue">
+    (1/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1.8%
+  </span>
+  <span class="absValue">
+    (1/57)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.seanwads.film_project.controller;
+&nbsp;
+&nbsp;import com.seanwads.film_project.model.Category;
+&nbsp;import com.seanwads.film_project.model.Film;
+&nbsp;import com.seanwads.film_project.model.FilmCategory;
+&nbsp;import com.seanwads.film_project.repository.FilmRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Controller;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;@CrossOrigin(origins = &quot;http://localhost:3000&quot;)
+&nbsp;@Controller
+&nbsp;@RequestMapping(path=&quot;/demo&quot;)
+<b class="fc">&nbsp;public class FilmController {</b>
+&nbsp;    @Autowired
+&nbsp;    private FilmRepository filmRepository;
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/allFilms&quot;)
+&nbsp;    public @ResponseBody Iterable&lt;Film&gt; getAllFilms() {
+<b class="nc">&nbsp;        return filmRepository.findAll();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/getFilmByID&quot;)
+&nbsp;    public @ResponseBody Optional&lt;Film&gt; getFilmByID(@RequestParam Integer id) {
+<b class="nc">&nbsp;        return filmRepository.findById(id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/filterFilmsByCategory&quot;)
+&nbsp;    public @ResponseBody Iterable&lt;Film&gt; filterFilm(@RequestParam Integer id) {
+&nbsp;
+<b class="nc">&nbsp;        if (id == 0) {</b>
+<b class="nc">&nbsp;            return getAllFilms();</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            Iterable&lt;Film&gt; filmIterable = getAllFilms();</b>
+<b class="nc">&nbsp;            List&lt;Film&gt; filmList = new ArrayList&lt;Film&gt;();</b>
+<b class="nc">&nbsp;            filmIterable.forEach(filmList::add);</b>
+&nbsp;
+<b class="nc">&nbsp;            List&lt;Film&gt; filmsToRemove = new ArrayList&lt;Film&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;            for (Film film : filmList) {</b>
+&nbsp;
+<b class="nc">&nbsp;                Set&lt;FilmCategory&gt; filmCategories = film.getCategorySet();</b>
+&nbsp;
+<b class="nc">&nbsp;                boolean hasFilterCategory = false;</b>
+&nbsp;
+<b class="nc">&nbsp;                for (FilmCategory filmCat : filmCategories) {</b>
+<b class="nc">&nbsp;                    Category category = filmCat.getCategoryCat();</b>
+&nbsp;
+<b class="nc">&nbsp;                    if (category.getId().equals(id)) {</b>
+<b class="nc">&nbsp;                        hasFilterCategory = true;</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                }</b>
+&nbsp;
+<b class="nc">&nbsp;                if (!hasFilterCategory) {</b>
+<b class="nc">&nbsp;                    filmsToRemove.add(film);</b>
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+<b class="nc">&nbsp;            filmList.removeAll(filmsToRemove);</b>
+<b class="nc">&nbsp;            return filmList;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/deleteFilmByID&quot;)
+&nbsp;    public @ResponseBody String deleteFilmByID(@RequestParam Integer id) {
+<b class="nc">&nbsp;        if (getFilmByID(id).isPresent()) {</b>
+<b class="nc">&nbsp;            Film filmToDelete = getFilmByID(id).get();</b>
+<b class="nc">&nbsp;            String filmTitle = filmToDelete.getTitle();</b>
+&nbsp;
+<b class="nc">&nbsp;            filmRepository.deleteById(id);</b>
+<b class="nc">&nbsp;            return &quot;Film: &quot; + filmTitle + &quot; has been deleted&quot;;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return &quot;Requested film not found&quot;;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(path=&quot;/createFilm&quot;)
+&nbsp;    public @ResponseBody Optional&lt;Film&gt; createFilm(@RequestBody Film filmParam){
+&nbsp;        try{
+<b class="nc">&nbsp;            Film film = filmRepository.save(new Film(filmParam.getId(), filmParam.getTitle(), filmParam.getDescription(), filmParam.getReleaseYear(), filmParam.getLanguageId()));</b>
+&nbsp;
+<b class="nc">&nbsp;            if(getFilmByID(film.getId()).isPresent()){</b>
+<b class="nc">&nbsp;                return Optional.of(film);</b>
+&nbsp;            }
+&nbsp;            else{
+<b class="nc">&nbsp;                return Optional.empty();</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;        } catch (Exception e){</b>
+<b class="nc">&nbsp;            return Optional.empty();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(path=&quot;/nextID&quot;)
+&nbsp;    public @ResponseBody Integer nextId(){
+<b class="nc">&nbsp;        Iterable&lt;Film&gt; films = getAllFilms();</b>
+<b class="nc">&nbsp;        List&lt;Film&gt; filmList = new ArrayList&lt;Film&gt;();</b>
+<b class="nc">&nbsp;        films.forEach(filmList::add);</b>
+&nbsp;
+<b class="nc">&nbsp;        Film lastFilm = filmList.get(filmList.size() - 1);</b>
+<b class="nc">&nbsp;        Integer lastId = lastFilm.getId();</b>
+&nbsp;
+<b class="nc">&nbsp;        return lastId + 1;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(path=&quot;/deleteFilm&quot;)
+&nbsp;    public @ResponseBody Optional&lt;Film&gt; deleteFilm(@RequestParam Integer id){
+&nbsp;
+<b class="nc">&nbsp;        if(getFilmByID(id).isPresent()){</b>
+&nbsp;
+<b class="nc">&nbsp;            Film film = getFilmByID(id).get();</b>
+<b class="nc">&nbsp;            film.detachCategories();</b>
+<b class="nc">&nbsp;            film.detachActors();</b>
+<b class="nc">&nbsp;            filmRepository.deleteById(id);</b>
+&nbsp;
+<b class="nc">&nbsp;            Optional&lt;Film&gt; deletedFilm = getFilmByID(id);</b>
+&nbsp;
+<b class="nc">&nbsp;            if(deletedFilm.isEmpty()){</b>
+<b class="nc">&nbsp;                return deletedFilm;</b>
+&nbsp;            }
+&nbsp;            else{
+<b class="nc">&nbsp;                return Optional.empty();</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;        else{
+<b class="nc">&nbsp;            return Optional.empty();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(path=&quot;/updateFilm&quot;)
+&nbsp;    public @ResponseBody Optional&lt;Film&gt; updateFilm(@RequestBody Film filmParam){
+<b class="nc">&nbsp;        Optional&lt;Film&gt; filmOptional = getFilmByID(filmParam.getId());</b>
+&nbsp;
+<b class="nc">&nbsp;        if(filmOptional.isPresent()){</b>
+<b class="nc">&nbsp;            Film film = filmOptional.get();</b>
+<b class="nc">&nbsp;            film.setTitle(filmParam.getTitle());</b>
+<b class="nc">&nbsp;            filmRepository.save(film);</b>
+<b class="nc">&nbsp;            return Optional.of(film);</b>
+&nbsp;        }
+&nbsp;        else {
+<b class="nc">&nbsp;            return Optional.empty();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-09-21 11:27</div>
+</div>
+</body>
+</html>

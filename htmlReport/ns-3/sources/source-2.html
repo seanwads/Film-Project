@@ -1,0 +1,174 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Category</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.seanwads.film_project.model</a>
+</div>
+
+<h1>Coverage Summary for Class: Category (com.seanwads.film_project.model)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Category</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Category$HibernateInstantiator$pjrswWbs</td>
+  </tr>
+  <tr>
+    <td class="name">Category$HibernateProxy$zzUX8ZKU</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.seanwads.film_project.model;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonIgnore;
+&nbsp;import jakarta.persistence.*;
+&nbsp;
+&nbsp;import java.sql.Time;
+&nbsp;import java.util.HashSet;
+&nbsp;import java.util.Set;
+&nbsp;
+&nbsp;@Entity
+&nbsp;@Table(name=&quot;category&quot;)
+<b class="nc">&nbsp;public class Category {</b>
+&nbsp;    @Id
+&nbsp;    @Column(name=&quot;category_id&quot;)
+&nbsp;    private Integer id;
+&nbsp;
+&nbsp;    public Integer getId() {
+<b class="nc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setId(Integer id) {
+<b class="nc">&nbsp;        this.id = id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String name;
+&nbsp;
+&nbsp;    public String getName() {
+<b class="nc">&nbsp;        return name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setName(String name) {
+<b class="nc">&nbsp;        this.name = name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Column(name = &quot;last_update&quot;)
+&nbsp;    private Time lastUpdate;
+&nbsp;
+&nbsp;    public Time getLastUpdate() {
+<b class="nc">&nbsp;        return lastUpdate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setLastUpdate(Time lastUpdate) {
+<b class="nc">&nbsp;        this.lastUpdate = lastUpdate;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    @OneToMany(mappedBy = &quot;categoryCat&quot;, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})</b>
+&nbsp;    @JsonIgnore
+&nbsp;    private Set&lt;FilmCategory&gt; filmSet = new HashSet&lt;&gt;();
+&nbsp;
+&nbsp;    public Set&lt;FilmCategory&gt; getFilmSet() {
+<b class="nc">&nbsp;        return filmSet;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setFilmSet(Set&lt;FilmCategory&gt; filmSet) {
+<b class="nc">&nbsp;        this.filmSet = filmSet;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-09-21 11:27</div>
+</div>
+</body>
+</html>

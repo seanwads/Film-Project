@@ -9,24 +9,24 @@ import java.io.Serializable;
 public class FilmActorPK implements Serializable {
 
     @Column(name="film_id")
-    private Integer film_id;
+    private Integer filmId;
 
-    public Integer getFilm_id() {
-        return film_id;
+    public Integer getFilmId() {
+        return filmId;
     }
 
-    public void setFilm_id(Integer film_id) {
-        this.film_id = film_id;
+    public void setFilmId(Integer filmId) {
+        this.filmId = filmId;
     }
 
     @Column(name="actor_id")
-    private Integer actor_id;
+    private Integer actorId;
 
-    public Integer getActor_id() {
-        return actor_id;
+    public Integer getActorId() {
+        return actorId;
     }
 
-    public void setActor_id(Integer actor_id) {
-        this.actor_id = actor_id;
+    public void setActorId(Integer actorId) {
+        this.actorId = actorId;
     }
 }
