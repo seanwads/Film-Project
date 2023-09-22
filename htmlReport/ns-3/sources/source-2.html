@@ -112,37 +112,38 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        this.id = id;</b>
 &nbsp;    }
 &nbsp;
+&nbsp;    @Column(name=&quot;name&quot;)
 &nbsp;    private String name;
 &nbsp;
-&nbsp;    public String getName() {
-<b class="nc">&nbsp;        return name;</b>
+<b class="nc">&nbsp;    public String getName() {</b>
+&nbsp;        return name;
 &nbsp;    }
 &nbsp;
-&nbsp;    public void setName(String name) {
-<b class="nc">&nbsp;        this.name = name;</b>
+<b class="nc">&nbsp;    public void setName(String name) {</b>
+&nbsp;        this.name = name;
 &nbsp;    }
 &nbsp;
 &nbsp;    @Column(name = &quot;last_update&quot;)
 &nbsp;    private Time lastUpdate;
 &nbsp;
-&nbsp;    public Time getLastUpdate() {
-<b class="nc">&nbsp;        return lastUpdate;</b>
+<b class="nc">&nbsp;    public Time getLastUpdate() {</b>
+&nbsp;        return lastUpdate;
 &nbsp;    }
 &nbsp;
-&nbsp;    public void setLastUpdate(Time lastUpdate) {
-<b class="nc">&nbsp;        this.lastUpdate = lastUpdate;</b>
+<b class="nc">&nbsp;    public void setLastUpdate(Time lastUpdate) {</b>
+&nbsp;        this.lastUpdate = lastUpdate;
 &nbsp;    }
-&nbsp;
-<b class="nc">&nbsp;    @OneToMany(mappedBy = &quot;categoryCat&quot;, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})</b>
+<b class="nc">&nbsp;</b>
+&nbsp;    @OneToMany(mappedBy = &quot;categoryCat&quot;, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
 &nbsp;    @JsonIgnore
 &nbsp;    private Set&lt;FilmCategory&gt; filmSet = new HashSet&lt;&gt;();
 &nbsp;
-&nbsp;    public Set&lt;FilmCategory&gt; getFilmSet() {
-<b class="nc">&nbsp;        return filmSet;</b>
+<b class="nc">&nbsp;    public Set&lt;FilmCategory&gt; getFilmSet() {</b>
+&nbsp;        return filmSet;
 &nbsp;    }
 &nbsp;
-&nbsp;    public void setFilmSet(Set&lt;FilmCategory&gt; filmSet) {
-<b class="nc">&nbsp;        this.filmSet = filmSet;</b>
+<b class="nc">&nbsp;    public void setFilmSet(Set&lt;FilmCategory&gt; filmSet) {</b>
+&nbsp;        this.filmSet = filmSet;
 &nbsp;    }
 &nbsp;}
 </code>
@@ -168,7 +169,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-09-21 11:27</div>
+    <div style="float:right;">generated on 2023-09-21 18:49</div>
 </div>
 </body>
 </html>

@@ -52,18 +52,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    11.1%
+    33.3%
   </span>
   <span class="absValue">
-    (1/9)
+    (3/9)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    1.8%
+    3.9%
   </span>
   <span class="absValue">
-    (1/57)
+    (3/77)
   </span>
 </td>
 </tr>
@@ -96,14 +96,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    @GetMapping(path = &quot;/allFilms&quot;)
 &nbsp;    public @ResponseBody Iterable&lt;Film&gt; getAllFilms() {
-<b class="nc">&nbsp;        return filmRepository.findAll();</b>
+<b class="fc">&nbsp;        return filmRepository.findAll();</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    @GetMapping(path = &quot;/getFilmByID&quot;)
 &nbsp;    public @ResponseBody Optional&lt;Film&gt; getFilmByID(@RequestParam Integer id) {
-<b class="nc">&nbsp;        return filmRepository.findById(id);</b>
+<b class="nc">&nbsp;</b>
+<b class="fc">&nbsp;        return filmRepository.findById(id);</b>
 &nbsp;    }
-&nbsp;
 &nbsp;
 &nbsp;    @GetMapping(path = &quot;/filterFilmsByCategory&quot;)
 &nbsp;    public @ResponseBody Iterable&lt;Film&gt; filterFilm(@RequestParam Integer id) {
@@ -158,22 +158,27 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    @PostMapping(path=&quot;/createFilm&quot;)
 &nbsp;    public @ResponseBody Optional&lt;Film&gt; createFilm(@RequestBody Film filmParam){
 &nbsp;        try{
-<b class="nc">&nbsp;            Film film = filmRepository.save(new Film(filmParam.getId(), filmParam.getTitle(), filmParam.getDescription(), filmParam.getReleaseYear(), filmParam.getLanguageId()));</b>
-&nbsp;
+<b class="nc">&nbsp;            Film film = filmRepository.save(new Film());</b>
+<b class="nc">&nbsp;            film.setId(film.getId());</b>
+<b class="nc">&nbsp;            film.setTitle(filmParam.getTitle());</b>
+<b class="nc">&nbsp;            film.setDescription(filmParam.getDescription());</b>
+<b class="nc">&nbsp;            film.setReleaseYear(filmParam.getReleaseYear());</b>
+<b class="nc">&nbsp;            film.setLanguageId(filmParam.getLanguageId());</b>
+<b class="nc">&nbsp;</b>
 <b class="nc">&nbsp;            if(getFilmByID(film.getId()).isPresent()){</b>
 <b class="nc">&nbsp;                return Optional.of(film);</b>
-&nbsp;            }
-&nbsp;            else{
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            else{</b>
 <b class="nc">&nbsp;                return Optional.empty();</b>
 &nbsp;            }
 &nbsp;
 <b class="nc">&nbsp;        } catch (Exception e){</b>
 <b class="nc">&nbsp;            return Optional.empty();</b>
-&nbsp;        }
-&nbsp;    }
-&nbsp;
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;    }</b>
+<b class="nc">&nbsp;</b>
 &nbsp;    @GetMapping(path=&quot;/nextID&quot;)
-&nbsp;    public @ResponseBody Integer nextId(){
+<b class="nc">&nbsp;    public @ResponseBody Integer nextId(){</b>
 <b class="nc">&nbsp;        Iterable&lt;Film&gt; films = getAllFilms();</b>
 <b class="nc">&nbsp;        List&lt;Film&gt; filmList = new ArrayList&lt;Film&gt;();</b>
 <b class="nc">&nbsp;        films.forEach(filmList::add);</b>
@@ -182,18 +187,16 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        Integer lastId = lastFilm.getId();</b>
 &nbsp;
 <b class="nc">&nbsp;        return lastId + 1;</b>
-&nbsp;    }
+<b class="nc">&nbsp;    }</b>
 &nbsp;
-&nbsp;    @DeleteMapping(path=&quot;/deleteFilm&quot;)
-&nbsp;    public @ResponseBody Optional&lt;Film&gt; deleteFilm(@RequestParam Integer id){
-&nbsp;
+<b class="nc">&nbsp;    @DeleteMapping(path=&quot;/deleteFilm&quot;)</b>
+<b class="nc">&nbsp;    public @ResponseBody Optional&lt;Film&gt; deleteFilm(@RequestParam Integer id){</b>
+<b class="nc">&nbsp;</b>
 <b class="nc">&nbsp;        if(getFilmByID(id).isPresent()){</b>
 &nbsp;
 <b class="nc">&nbsp;            Film film = getFilmByID(id).get();</b>
-<b class="nc">&nbsp;            film.detachCategories();</b>
-<b class="nc">&nbsp;            film.detachActors();</b>
 <b class="nc">&nbsp;            filmRepository.deleteById(id);</b>
-&nbsp;
+<b class="nc">&nbsp;</b>
 <b class="nc">&nbsp;            Optional&lt;Film&gt; deletedFilm = getFilmByID(id);</b>
 &nbsp;
 <b class="nc">&nbsp;            if(deletedFilm.isEmpty()){</b>
@@ -201,17 +204,17 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;            }
 &nbsp;            else{
 <b class="nc">&nbsp;                return Optional.empty();</b>
-&nbsp;            }
+<b class="nc">&nbsp;            }</b>
 &nbsp;        }
 &nbsp;        else{
 <b class="nc">&nbsp;            return Optional.empty();</b>
 &nbsp;        }
 &nbsp;    }
-&nbsp;
+<b class="nc">&nbsp;</b>
 &nbsp;    @PutMapping(path=&quot;/updateFilm&quot;)
-&nbsp;    public @ResponseBody Optional&lt;Film&gt; updateFilm(@RequestBody Film filmParam){
+<b class="nc">&nbsp;    public @ResponseBody Optional&lt;Film&gt; updateFilm(@RequestBody Film filmParam){</b>
 <b class="nc">&nbsp;        Optional&lt;Film&gt; filmOptional = getFilmByID(filmParam.getId());</b>
-&nbsp;
+<b class="nc">&nbsp;</b>
 <b class="nc">&nbsp;        if(filmOptional.isPresent()){</b>
 <b class="nc">&nbsp;            Film film = filmOptional.get();</b>
 <b class="nc">&nbsp;            film.setTitle(filmParam.getTitle());</b>
@@ -246,7 +249,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-09-21 11:27</div>
+    <div style="float:right;">generated on 2023-09-21 18:49</div>
 </div>
 </body>
 </html>

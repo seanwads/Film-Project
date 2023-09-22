@@ -31,7 +31,7 @@ export default function FilmCard({ filmInfo, fetchFilms, updateCardCount }){
 function InfoCard({ film, updateFilm, fetchFilmList }){
 
     async function deleteFilm(){
-        await fetch('http://localhost:8080/demo/deleteFilm?id=' + film.id, {method:'DELETE'});
+        await fetch('http://localhost:8080/demo/deleteFilmByID?id=' + film.id);
         fetchFilmList();
       }
 

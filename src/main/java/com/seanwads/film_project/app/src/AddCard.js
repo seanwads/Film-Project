@@ -44,8 +44,8 @@ export default function AddCard({ updateFilms}){
           "id": "0",
           "title": event.target.titleInput.value,
           "description": event.target.descriptionInput.value,
-          "release_year": event.target.yearInput.value,
-          "language_id": "1"
+          "releaseYear": event.target.yearInput.value,
+          "languageId": 1
         })});
   
         updateFilms();

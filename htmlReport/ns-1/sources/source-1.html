@@ -89,12 +89,15 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;import org.springframework.boot.SpringApplication;
 &nbsp;import org.springframework.boot.autoconfigure.SpringBootApplication;
-&nbsp;
+&nbsp;import org.springframework.context.annotation.Bean;
+&nbsp;import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+<b class="fc">&nbsp;</b>
 &nbsp;@SpringBootApplication
-<b class="fc">&nbsp;public class FilmProjectApplication {</b>
-&nbsp;
+&nbsp;public class FilmProjectApplication {
+<b class="nc">&nbsp;</b>
 &nbsp;	public static void main(String[] args) {
-<b class="nc">&nbsp;		SpringApplication.run(FilmProjectApplication.class, args);</b>
+&nbsp;
+&nbsp;		SpringApplication.run(FilmProjectApplication.class, args);
 &nbsp;	}
 &nbsp;
 &nbsp;}
@@ -121,7 +124,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-09-21 11:27</div>
+    <div style="float:right;">generated on 2023-09-21 18:49</div>
 </div>
 </body>
 </html>

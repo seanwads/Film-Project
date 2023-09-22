@@ -179,4 +179,16 @@ public class Film {
         this.actors = actors;
     }
 
+    public Film(){
+
+    }
+
+    public Film(Integer id, String title, String description, Integer releaseYear, Integer languageId){
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.releaseYear = releaseYear;
+        this.languageId = languageId;
+    }
+
 }

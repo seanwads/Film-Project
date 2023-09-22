@@ -81,12 +81,7 @@ public class FilmController {
     @PostMapping(path="/createFilm")
     public @ResponseBody Optional<Film> createFilm(@RequestBody Film filmParam){
         try{
-            Film film = filmRepository.save(new Film());
-            film.setId(film.getId());
-            film.setTitle(filmParam.getTitle());
-            film.setDescription(filmParam.getDescription());
-            film.setReleaseYear(filmParam.getReleaseYear());
-            film.setLanguageId(filmParam.getLanguageId());
+            Film film = filmRepository.save(new Film(filmParam.getId(), filmParam.getTitle(), filmParam.getDescription(), filmParam.getReleaseYear(), filmParam.getLanguageId()));
 
             if(getFilmByID(film.getId()).isPresent()){
                 return Optional.of(film);
@@ -96,40 +91,6 @@ public class FilmController {
             }
 
         } catch (Exception e){
-            return Optional.empty();
-        }
-    }
-
-    @GetMapping(path="/nextID")
-    public @ResponseBody Integer nextId(){
-        Iterable<Film> films = getAllFilms();
-        List<Film> filmList = new ArrayList<Film>();
-        films.forEach(filmList::add);
-
-        Film lastFilm = filmList.get(filmList.size() - 1);
-        Integer lastId = lastFilm.getId();
-
-        return lastId + 1;
-    }
-
-    @DeleteMapping(path="/deleteFilm")
-    public @ResponseBody Optional<Film> deleteFilm(@RequestParam Integer id){
-
-        if(getFilmByID(id).isPresent()){
-
-            Film film = getFilmByID(id).get();
-            filmRepository.deleteById(id);
-
-            Optional<Film> deletedFilm = getFilmByID(id);
-
-            if(deletedFilm.isEmpty()){
-                return deletedFilm;
-            }
-            else{
-                return Optional.empty();
-            }
-        }
-        else{
             return Optional.empty();
         }
     }

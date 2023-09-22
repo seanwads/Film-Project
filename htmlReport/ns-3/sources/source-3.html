@@ -114,185 +114,161 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        this.id = id;</b>
 &nbsp;    }
 &nbsp;
+&nbsp;    @Column(name = &quot;title&quot;)
 &nbsp;    private String title;
 &nbsp;
-&nbsp;    public String getTitle() {
-<b class="nc">&nbsp;        return title;</b>
+<b class="nc">&nbsp;    public String getTitle() {</b>
+&nbsp;        return title;
 &nbsp;    }
 &nbsp;
-&nbsp;    public void setTitle(String title) {
-<b class="nc">&nbsp;        this.title = title;</b>
+<b class="nc">&nbsp;    public void setTitle(String title) {</b>
+&nbsp;        this.title = title;
 &nbsp;    }
 &nbsp;
+&nbsp;    @Column(name = &quot;description&quot;)
 &nbsp;    private String description;
-&nbsp;
+<b class="nc">&nbsp;</b>
 &nbsp;    public String getDescription() {
-<b class="nc">&nbsp;        return description;</b>
+&nbsp;        return description;
 &nbsp;    }
-&nbsp;
+<b class="nc">&nbsp;</b>
 &nbsp;    public void setDescription(String description) {
-<b class="nc">&nbsp;        this.description = description;</b>
+&nbsp;        this.description = description;
 &nbsp;    }
 &nbsp;
 &nbsp;    @Column(name = &quot;release_year&quot;)
-&nbsp;    private Year releaseYear;
-&nbsp;
-&nbsp;    public Year getReleaseYear() {
-<b class="nc">&nbsp;        return releaseYear;</b>
+&nbsp;    private Integer releaseYear;
+<b class="nc">&nbsp;</b>
+&nbsp;    public Integer getReleaseYear() {
+&nbsp;        return releaseYear;
 &nbsp;    }
-&nbsp;
-&nbsp;    public void setReleaseYear(Year releaseYear) {
-<b class="nc">&nbsp;        this.releaseYear = releaseYear;</b>
+<b class="nc">&nbsp;</b>
+&nbsp;    public void setReleaseYear(Integer releaseYear) {
+&nbsp;        this.releaseYear = releaseYear;
 &nbsp;    }
 &nbsp;
 &nbsp;    @Column(name = &quot;language_id&quot;)
 &nbsp;    private Integer languageId;
-&nbsp;
+<b class="nc">&nbsp;</b>
 &nbsp;    public Integer getLanguageId() {
-<b class="nc">&nbsp;        return languageId;</b>
+&nbsp;        return languageId;
 &nbsp;    }
-&nbsp;
+<b class="nc">&nbsp;</b>
 &nbsp;    public void setLanguageId(Integer languageId) {
-<b class="nc">&nbsp;        this.languageId = languageId;</b>
+&nbsp;        this.languageId = languageId;
 &nbsp;    }
 &nbsp;
 &nbsp;    @Column(name = &quot;original_language_id&quot;)
 &nbsp;    private Integer originalLanguageId;
-&nbsp;
+<b class="nc">&nbsp;</b>
 &nbsp;    public Integer getOriginalLanguageId() {
-<b class="nc">&nbsp;        return originalLanguageId;</b>
+&nbsp;        return originalLanguageId;
 &nbsp;    }
-&nbsp;
+<b class="nc">&nbsp;</b>
 &nbsp;    public void setOriginalLanguageId(Integer originalLanguageId) {
-<b class="nc">&nbsp;        this.originalLanguageId = originalLanguageId;</b>
+&nbsp;        this.originalLanguageId = originalLanguageId;
 &nbsp;    }
 &nbsp;
 &nbsp;    @Column(name = &quot;rental_duration&quot;)
 &nbsp;    private Integer rentalDuration;
-&nbsp;
+<b class="nc">&nbsp;</b>
 &nbsp;    public Integer getRentalDuration() {
-<b class="nc">&nbsp;        return rentalDuration;</b>
+&nbsp;        return rentalDuration;
 &nbsp;    }
-&nbsp;
+<b class="nc">&nbsp;</b>
 &nbsp;    public void setRentalDuration(Integer rentalDuration) {
-<b class="nc">&nbsp;        this.rentalDuration = rentalDuration;</b>
+&nbsp;        this.rentalDuration = rentalDuration;
 &nbsp;    }
 &nbsp;
 &nbsp;    @Column(name = &quot;rental_rate&quot;)
 &nbsp;    private Double rentalRate;
-&nbsp;
+<b class="nc">&nbsp;</b>
 &nbsp;    public Double getRentalRate() {
-<b class="nc">&nbsp;        return rentalRate;</b>
+&nbsp;        return rentalRate;
 &nbsp;    }
-&nbsp;
+<b class="nc">&nbsp;</b>
 &nbsp;    public void setRentalRate(Double rentalRate) {
-<b class="nc">&nbsp;        this.rentalRate = rentalRate;</b>
+&nbsp;        this.rentalRate = rentalRate;
 &nbsp;    }
 &nbsp;
-&nbsp;    private Integer length;
+&nbsp;    @Column(name = &quot;length&quot;)
+<b class="nc">&nbsp;    private Integer length;</b>
 &nbsp;
 &nbsp;    public Integer getLength() {
-<b class="nc">&nbsp;        return length;</b>
-&nbsp;    }
+&nbsp;        return length;
+<b class="nc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    public void setLength(Integer length) {
-<b class="nc">&nbsp;        this.length = length;</b>
+&nbsp;        this.length = length;
 &nbsp;    }
 &nbsp;
 &nbsp;    @Column(name = &quot;replacement_cost&quot;)
-&nbsp;    private Double replacementCost;
+<b class="nc">&nbsp;    private Double replacementCost;</b>
 &nbsp;
 &nbsp;    public Double getReplacementCost() {
-<b class="nc">&nbsp;        return replacementCost;</b>
-&nbsp;    }
+&nbsp;        return replacementCost;
+<b class="nc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    public void setReplacementCost(Double replacementCost) {
-<b class="nc">&nbsp;        this.replacementCost = replacementCost;</b>
+&nbsp;        this.replacementCost = replacementCost;
 &nbsp;    }
 &nbsp;
-&nbsp;    @Column (columnDefinition = &quot;ENUM(&#39;G&#39;, &#39;PG&#39;, &#39;R&#39;, &#39;PG13&#39;, NC17)&quot;)
+&nbsp;    @Column (columnDefinition = &quot;ENUM(&#39;G&#39;, &#39;PG&#39;, &#39;R&#39;, &#39;PG13&#39;, NC17)&quot;, name = &quot;rating&quot;)
 &nbsp;    @Enumerated(EnumType.STRING)
-&nbsp;    private Rating rating;
+<b class="nc">&nbsp;    private Rating rating;</b>
 &nbsp;
 &nbsp;    public Rating getRating() {
-<b class="nc">&nbsp;        return rating;</b>
-&nbsp;    }
+&nbsp;        return rating;
+<b class="nc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    public void setRating(Rating rating) {
-<b class="nc">&nbsp;        this.rating = rating;</b>
+&nbsp;        this.rating = rating;
 &nbsp;    }
 &nbsp;
 &nbsp;    @Column(name = &quot;special_features&quot;)
-&nbsp;    private String specialFeatures;
+<b class="nc">&nbsp;    private String specialFeatures;</b>
 &nbsp;
 &nbsp;    public String getSpecialFeatures() {
-<b class="nc">&nbsp;        return specialFeatures;</b>
-&nbsp;    }
+&nbsp;        return specialFeatures;
+<b class="nc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    public void setSpecialFeatures(String specialFeatures) {
-<b class="nc">&nbsp;        this.specialFeatures = specialFeatures;</b>
+&nbsp;        this.specialFeatures = specialFeatures;
 &nbsp;    }
 &nbsp;
 &nbsp;    @Column(name = &quot;last_update&quot;)
-&nbsp;    private Time lastUpdate;
+<b class="nc">&nbsp;    private Time lastUpdate;</b>
 &nbsp;
 &nbsp;    public Time getLastUpdate() {
-<b class="nc">&nbsp;        return lastUpdate;</b>
-&nbsp;    }
+&nbsp;        return lastUpdate;
+<b class="nc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    public void setLastUpdate(Time lastUpdate) {
 <b class="nc">&nbsp;        this.lastUpdate = lastUpdate;</b>
 &nbsp;    }
 &nbsp;
-<b class="nc">&nbsp;    @OneToMany(mappedBy = &quot;filmCat&quot;, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true )</b>
+&nbsp;    @OneToMany(mappedBy = &quot;filmCat&quot;, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true )
 &nbsp;    @JsonIgnore
-&nbsp;    private Set&lt;FilmCategory&gt; categorySet = new HashSet&lt;&gt;();
+<b class="nc">&nbsp;    private Set&lt;FilmCategory&gt; categories = new HashSet&lt;&gt;();</b>
 &nbsp;
 &nbsp;    public Set&lt;FilmCategory&gt; getCategorySet() {
-<b class="nc">&nbsp;        return categorySet;</b>
-&nbsp;    }
+&nbsp;        return categories;
+<b class="nc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    public void setCategorySet(Set&lt;FilmCategory&gt; categorySet) {
-<b class="nc">&nbsp;        this.categorySet = categorySet;</b>
+&nbsp;        this.categories = categorySet;
 &nbsp;    }
 &nbsp;
 &nbsp;
 &nbsp;    @OneToMany(mappedBy =&quot;film&quot;, cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true )
-&nbsp;    @JsonIgnore
+<b class="nc">&nbsp;    @JsonIgnore</b>
 &nbsp;    private Set&lt;FilmActor&gt; actors;
-&nbsp;
-<b class="nc">&nbsp;    public Set&lt;FilmActor&gt; getActors(){return actors;}</b>
+<b class="nc">&nbsp;</b>
+&nbsp;    public Set&lt;FilmActor&gt; getActors(){return actors;}
 &nbsp;    public void setActors(Set&lt;FilmActor&gt; actors){
-<b class="nc">&nbsp;        this.actors = actors;</b>
+&nbsp;        this.actors = actors;
 &nbsp;    }
-&nbsp;
-&nbsp;
-&nbsp;
-<b class="nc">&nbsp;    Film(){</b>
-&nbsp;
-&nbsp;    }
-&nbsp;
-&nbsp;    public Film(
-&nbsp;            Integer id,
-&nbsp;            String title,
-&nbsp;            String description,
-&nbsp;            Year releaseYear,
-&nbsp;            Integer languageId
-<b class="nc">&nbsp;    ){</b>
-<b class="nc">&nbsp;        this.id = id;</b>
-<b class="nc">&nbsp;        this.title = title;</b>
-<b class="nc">&nbsp;        this.description = description;</b>
-<b class="nc">&nbsp;        this.releaseYear = releaseYear;</b>
-<b class="nc">&nbsp;        this.languageId = languageId;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void detachCategories(){
-<b class="nc">&nbsp;        this.categorySet.removeAll(getCategorySet());</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void detachActors(){
-<b class="nc">&nbsp;        this.actors.removeAll(getActors());</b>
-&nbsp;    }
+<b class="nc">&nbsp;</b>
 &nbsp;}
 </code>
 </pre>
@@ -317,7 +293,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-09-21 11:27</div>
+    <div style="float:right;">generated on 2023-09-21 18:49</div>
 </div>
 </body>
 </html>
