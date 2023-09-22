@@ -2,6 +2,7 @@ package com.seanwads.film_project.controller;
 
 import com.seanwads.film_project.model.Film;
 import com.seanwads.film_project.repository.CategoryRepository;
+import com.seanwads.film_project.repository.FilmCategoryRepository;
 import com.seanwads.film_project.repository.FilmRepository;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -38,9 +39,6 @@ class FilmControllerTest {
 
     @MockBean
     FilmRepository filmRepository;
-
-    @Autowired
-    CategoryRepository categoryRepository;
 
     @Test
     void testGetAllFilms(){
@@ -114,39 +112,48 @@ class FilmControllerTest {
 
 
     @Test
-    void testFilterFilm() throws Exception {
+    void testFilterFilmMapping() throws Exception {
 
         Iterable<Film> film1Iterable = filmController.filterFilm(1);
-        int film1Size = 0;
+        int film1Count = 0;
         for(Film film: film1Iterable){
-            film1Size ++;
+            film1Count ++;
         }
 
-        System.out.println(film1Size);
+        assert(film1Count > 0);
 
         Iterable<Film> film2Iterable = filmController.filterFilm(2);
-        int film2Size = 0;
+        int film2Count = 0;
         for(Film film: film2Iterable){
-            film2Size ++;
+            film2Count ++;
         }
+
+        assert(film2Count > 0);
+
 
         mockMvc.perform(get("/demo/filterFilmsByCategory?id=1")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(film1Size)));
+                .andExpect(jsonPath("$", hasSize(film1Count)));
 
         mockMvc.perform(get("/demo/filterFilmsByCategory?id=2")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(film2Size)));
+                .andExpect(jsonPath("$", hasSize(film2Count)));
     }
 
     @Test
     void testFilterFilmAll() throws Exception {
-        Iterable<Film> filmIterable = filmController.filterFilm(0);
+        Integer id = 0;
+
+        Iterable<Film> filmIterable = filmController.filterFilm(id);
+
         int filmCount = 0;
-        for(Film film: filmIterable){
+        for(Film film : filmIterable){
             filmCount++;
         }
 
+        System.out.println(filmCount);
+
+        assert(filmCount >= 1000);
     }
 
     @Test
