@@ -2,6 +2,7 @@ package com.seanwads.film_project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.sql.Time;
 import java.time.Year;
@@ -11,6 +12,14 @@ import java.util.Set;
 @Entity
 @Table(name = "film")
 public class Film {
+
+    public Film(Integer id, String title, String description, Integer releaseYear, Integer languageId){
+        setId(id);
+        setTitle(title);
+        setDescription(description);
+        setReleaseYear(releaseYear);
+        setLanguageId(languageId);
+    }
 
     @Id
     @Column(name="film_id")
@@ -179,16 +188,7 @@ public class Film {
         this.actors = actors;
     }
 
-    public Film(){
 
-    }
 
-    public Film(Integer id, String title, String description, Integer releaseYear, Integer languageId){
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.releaseYear = releaseYear;
-        this.languageId = languageId;
-    }
 
 }

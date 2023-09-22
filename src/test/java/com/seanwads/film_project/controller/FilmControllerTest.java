@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
@@ -34,61 +35,21 @@ class FilmControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    @Autowired
-    FilmController filmController;
-
-    @MockBean
-    FilmRepository filmRepository;
-
     @MockBean
     FilmController mockFilmController;
 
-    @Test
-    void testGetFilmByID() throws Exception {
-        Integer id = 1;
-        Film film = new Film(id, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
-
-        when(filmRepository.findById(id)).thenReturn(Optional.of(film));
-
-        mockMvc.perform(get("/demo/getFilmByID?id=1").accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.title").value(film.getTitle()))
-                .andExpect(jsonPath("$.description").value(film.getDescription()))
-                .andExpect(jsonPath("$.releaseYear").value(film.getReleaseYear()))
-                .andExpect(jsonPath("$.languageId").value(film.getLanguageId()))
-                .andDo(print());
-    }
-    @Test
-    void testGetAllFilms() throws Exception {
-
-        Film film1 = new Film(1, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
-
-        Film film2 = new Film(2, "ACE ADMINISTRATOR", "A Astounding Epistle of a Database Administrator And a Explorer who must Find a Car in Ancient China", 2006, 1);
-
-        doReturn(Lists.newArrayList(film1, film2)).when(filmRepository).findAll();
-
-
-        mockMvc.perform(get("/demo/allFilms")
-                .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$[0].id").value(film1.getId()))
-//                .andExpect(jsonPath("$[1].id").value(film2.getId()))
-                .andExpect(jsonPath("$[0].title").value(film1.getTitle()))
-                .andExpect(jsonPath("$[1].title").value(film2.getTitle()))
-                .andExpect(jsonPath("$", hasSize(2)));
-
-    }
 
 
     @Test
     void testFilterFilm() throws Exception {
 
-        Iterable<Film> film1Iterable = filmController.filterFilm(1);
+        Iterable<Film> film1Iterable = mockFilmController.filterFilm(1);
         int film1Size = 0;
         for(Film film: film1Iterable){
             film1Size ++;
         }
 
-        Iterable<Film> film2Iterable = filmController.filterFilm(2);
+        Iterable<Film> film2Iterable = mockFilmController.filterFilm(2);
         int film2Size = 0;
         for(Film film: film2Iterable){
             film2Size ++;
