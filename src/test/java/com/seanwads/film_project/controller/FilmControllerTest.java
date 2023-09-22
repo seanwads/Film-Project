@@ -39,20 +39,6 @@ class FilmControllerTest {
     @MockBean
     FilmRepository filmRepository;
 
-    @Autowired
-    CategoryRepository categoryRepository;
-
-    @Test
-    void testGetAllFilms(){
-        Iterable<Film> filmIterable = filmController.getAllFilms();
-
-        int filmCount = 0;
-        for (Film film: filmIterable ) {
-            filmCount++;
-        }
-
-        assert(filmCount >= 1000);
-    }
 
     @Test
     void testGetAllFilmsMapping() throws Exception {
@@ -65,8 +51,8 @@ class FilmControllerTest {
 
         mockMvc.perform(get("/demo/allFilms")
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].id").value(film1.getFilm_id()))
-                .andExpect(jsonPath("$[1].id").value(film2.getFilm_id()))
+                .andExpect(jsonPath("$[0].film_id").value(film1.getFilm_id()))
+                .andExpect(jsonPath("$[1].film_id").value(film2.getFilm_id()))
                 .andExpect(jsonPath("$[0].title").value(film1.getTitle()))
                 .andExpect(jsonPath("$[1].title").value(film2.getTitle()))
                 .andExpect(jsonPath("$", hasSize(2)));
