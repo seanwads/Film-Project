@@ -46,7 +46,7 @@ public class FilmController {
                 for (FilmCategory filmCat : filmCategories) {
                     Category category = filmCat.getCategoryCat();
 
-                    if (category.getId() == id ) {
+                    if (category.getCategory_id() == id ) {
                         hasFilterCategory = true;
                     }
                 }
@@ -78,9 +78,9 @@ public class FilmController {
     @PostMapping(path="/createFilm")
     public @ResponseBody Optional<Film> createFilm(@RequestBody Film filmParam){
         try{
-            Film film = filmRepository.save(new Film(filmParam.getId(), filmParam.getTitle(), filmParam.getDescription(), filmParam.getReleaseYear(), filmParam.getLanguageId()));
+            Film film = filmRepository.save(new Film(filmParam.getFilm_id(), filmParam.getTitle(), filmParam.getDescription(), filmParam.getReleaseYear(), filmParam.getLanguageId()));
 
-            if(getFilmByID(film.getId()).isPresent()){
+            if(getFilmByID(film.getFilm_id()).isPresent()){
                 return Optional.of(film);
             }
             else{
@@ -94,7 +94,7 @@ public class FilmController {
 
     @PutMapping(path="/updateFilm")
     public @ResponseBody Optional<Film> updateFilm(@RequestBody Film filmParam){
-        Optional<Film> filmOptional = getFilmByID(filmParam.getId());
+        Optional<Film> filmOptional = getFilmByID(filmParam.getFilm_id());
 
         if(filmOptional.isPresent()){
             Film film = filmOptional.get();

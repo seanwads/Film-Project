@@ -2,10 +2,8 @@ package com.seanwads.film_project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
 
 import java.sql.Time;
-import java.time.Year;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,8 +11,8 @@ import java.util.Set;
 @Table(name = "film")
 public class Film {
 
-    public Film(Integer id, String title, String description, Integer releaseYear, Integer languageId){
-        setId(id);
+    public Film(Integer film_id, String title, String description, Integer releaseYear, Integer languageId){
+        setFilm_id(film_id);
         setTitle(title);
         setDescription(description);
         setReleaseYear(releaseYear);
@@ -27,14 +25,14 @@ public class Film {
 
     @Id
     @Column(name="film_id")
-    private Integer id;
+    private Integer film_id;
 
-    public Integer getId() {
-        return id;
+    public Integer getFilm_id() {
+        return film_id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setFilm_id(Integer film_id) {
+        this.film_id = film_id;
     }
 
     @Column(name = "title")

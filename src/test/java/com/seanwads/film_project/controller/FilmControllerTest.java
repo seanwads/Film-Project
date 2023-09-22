@@ -4,7 +4,6 @@ import com.seanwads.film_project.model.Film;
 import com.seanwads.film_project.repository.CategoryRepository;
 import com.seanwads.film_project.repository.FilmRepository;
 import org.assertj.core.util.Lists;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -67,8 +65,8 @@ class FilmControllerTest {
 
         mockMvc.perform(get("/demo/allFilms")
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].id").value(film1.getId()))
-                .andExpect(jsonPath("$[1].id").value(film2.getId()))
+                .andExpect(jsonPath("$[0].id").value(film1.getFilm_id()))
+                .andExpect(jsonPath("$[1].id").value(film2.getFilm_id()))
                 .andExpect(jsonPath("$[0].title").value(film1.getTitle()))
                 .andExpect(jsonPath("$[1].title").value(film2.getTitle()))
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -85,7 +83,7 @@ class FilmControllerTest {
         });
 
         assertAll(
-                () -> assertEquals(result.getId(), filmToGet.getId()),
+                () -> assertEquals(result.getFilm_id(), filmToGet.getFilm_id()),
                 () -> assertEquals(result.getTitle(), filmToGet.getTitle())
         );
     }
@@ -106,7 +104,7 @@ class FilmControllerTest {
         when(filmRepository.findById(1)).thenReturn(Optional.of(film));
 
         mockMvc.perform(get("/demo/getFilmByID?id=1").accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(film.getId()))
+                .andExpect(jsonPath("$.id").value(film.getFilm_id()))
                 .andExpect(jsonPath("$.title").value(film.getTitle()))
                 .andExpect(jsonPath("$.description").value(film.getDescription()))
                 .andExpect(jsonPath("$.releaseYear").value(film.getReleaseYear()))
