@@ -21,6 +21,10 @@ public class Film {
         setLanguageId(languageId);
     }
 
+    public Film(){
+
+    }
+
     @Id
     @Column(name="film_id")
     private Integer id;
@@ -168,14 +172,14 @@ public class Film {
 
     @OneToMany(mappedBy = "filmCat", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true )
     @JsonIgnore
-    private Set<FilmCategory> categories = new HashSet<>();
+    private Set<FilmCategory> categorySet = new HashSet<>();
 
     public Set<FilmCategory> getCategorySet() {
-        return categories;
+        return categorySet;
     }
 
     public void setCategorySet(Set<FilmCategory> categorySet) {
-        this.categories = categorySet;
+        this.categorySet = categorySet;
     }
 
 

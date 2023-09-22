@@ -18,22 +18,19 @@ public class FilmController {
     private FilmRepository filmRepository;
 
     @GetMapping(path = "/allFilms")
-    public @ResponseBody Iterable<Film> getAllFilms() {
-        return filmRepository.findAll();
-    }
+    public @ResponseBody Iterable<Film> getAllFilms() {return filmRepository.findAll();}
 
     @GetMapping(path = "/getFilmByID")
-    public @ResponseBody Optional<Film> getFilmByID(@RequestParam Integer id) {
-
-        return filmRepository.findById(id);
-    }
+    public @ResponseBody Optional<Film> getFilmByID(@RequestParam Integer id) {return filmRepository.findById(id);}
 
     @GetMapping(path = "/filterFilmsByCategory")
     public @ResponseBody Iterable<Film> filterFilm(@RequestParam Integer id) {
 
         if (id == 0) {
-            return getAllFilms();
-        } else {
+            return filmRepository.findAll();
+        }
+        else {
+
             Iterable<Film> filmIterable = getAllFilms();
             List<Film> filmList = new ArrayList<Film>();
             filmIterable.forEach(filmList::add);
@@ -49,7 +46,7 @@ public class FilmController {
                 for (FilmCategory filmCat : filmCategories) {
                     Category category = filmCat.getCategoryCat();
 
-                    if (category.getId().equals(id)) {
+                    if (category.getId() == id ) {
                         hasFilterCategory = true;
                     }
                 }
