@@ -3,8 +3,6 @@ package com.seanwads.film_project.controller;
 import com.seanwads.film_project.model.Category;
 import com.seanwads.film_project.model.Film;
 import com.seanwads.film_project.model.FilmCategory;
-import com.seanwads.film_project.repository.FilmRepository;
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,16 +30,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
-class FilmControllerTest {
+class FilmControllerIntegrationTest {
 
     @Autowired
     MockMvc mockMvc;
 
     @MockBean
     FilmController filmController;
-
-    @MockBean
-    FilmRepository filmRepository;
 
 
     @Test
@@ -50,8 +45,9 @@ class FilmControllerTest {
 
         Film film2 = new Film(2, "ACE ADMINISTRATOR", "A Astounding Epistle of a Database Administrator And a Explorer who must Find a Car in Ancient China", 2006, 1);
 
-        doReturn(Lists.newArrayList(film1, film2)).when(filmRepository).findAll();
+        Iterable<Film> films = Arrays.asList(film1, film2);
 
+        when(filmController.getAllFilms()).thenReturn(films);
 
         mockMvc.perform(get("/demo/allFilms")
                         .accept(MediaType.APPLICATION_JSON))
@@ -68,7 +64,7 @@ class FilmControllerTest {
     void testGetFilmByID() throws Exception {
         Film film = new Film(1, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
 
-        when(filmRepository.findById(1)).thenReturn(Optional.of(film));
+        when(filmController.getFilmByID(1)).thenReturn(Optional.of(film));
 
         mockMvc.perform(get("/demo/getFilmByID?id=1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.film_id").value(film.getFilm_id()))
@@ -123,7 +119,6 @@ class FilmControllerTest {
     void testDeleteFilmByID() throws Exception {
         Film filmToDelete = new Film(1, "FILM_TO_DELETE", "film to delete", 2023, 1);
 
-        when(filmRepository.save(filmToDelete)).thenReturn(filmToDelete);
         when(filmController.deleteFilmByID(1)).thenReturn("Film: FILM_TO_DELETE has been deleted");
 
         MvcResult result = mockMvc.perform(delete("/demo/deleteFilmByID?id=1")).andReturn();
