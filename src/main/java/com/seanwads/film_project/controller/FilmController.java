@@ -99,6 +99,7 @@ public class FilmController {
         if(filmOptional.isPresent()){
             Film film = filmOptional.get();
             film.setTitle(filmParam.getTitle());
+            film.setDescription(filmParam.getDescription());
             filmRepository.save(film);
             return Optional.of(film);
         }

@@ -5,14 +5,13 @@ export default function FilmCard({ filmInfo, fetchFilms, updateCardCount }){
   
     const[updateActive, setUpdateActive] = useState(false);
   
-  
     async function updateCard(){
         setUpdateActive(!updateActive);
     }
     
 
     return (
-        <Card key={filmInfo.film_id} data-testid={'film-card-' + filmInfo.film_id}>
+        <Card key={filmInfo.film_id} data-testid={'film-card-' + filmInfo.film_id} style={{minWidth: '50rem', padding:'15px', margin: '15px'}}>
             {updateActive
                 ? <UpdateForm 
                     film={filmInfo}
@@ -67,7 +66,7 @@ function UpdateForm({ film, updateFilm, fetchFilmList }){
           body: JSON.stringify({
             "film_id": film.film_id,
             "title": event.target.nameEditInput.value,
-            "description": film.description,
+            "description": event.target.descEditInput.value,
             "releaseYear": film.year,
             "languageId": film.language_id
           })
@@ -82,7 +81,10 @@ function UpdateForm({ film, updateFilm, fetchFilmList }){
             <Form inline onSubmit={handleSubmit}>
               <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                 <Label for="nameEditInput" className='mr-sm-2'>Change Title:</Label>
-                <Input type="text" name="nameEditInput" id="nameEditInput" defaultValue={film.title}/>
+                <Input type="text" name="nameEditInput" id="nameEditInput" defaultValue={film.title} data-testid="nameTextbox"/>
+
+                <Label for="descEditInput" className='mr-sm-2'>Change Description:</Label>
+                <Input type="text" name="descEditInput" id="descEditInput" defaultValue={film.description} data-testid="descTextbox"/>
               </FormGroup>
               <Button type='submit' color='success' outline>Submit</Button>
             </Form>

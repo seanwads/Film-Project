@@ -1,6 +1,6 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
+import { CardGroup, Navbar, NavbarBrand } from 'reactstrap';
 import FilmCard from './FilmCard';
 import FilterBar from './FilterBar';
 import AddCard from './AddCard';
@@ -34,24 +34,25 @@ export default function App() {
       <Navbar color='dark'>
         <NavbarBrand>Totally Real And Not Auto-Generated Movies</NavbarBrand>
       </Navbar>
-      <div className='list'>
-      <div className='filter-bar'>
-        <FilterBar getFilteredList={FetchFilteredList} />
+        <div className='list'>
+          <div className='filter-bar'>
+            <FilterBar getFilteredList={FetchFilteredList} />
+          </div>
+
+          <div className='page-content'>
+          <AddCard 
+            updateFilms={() => FetchFilteredList(0)}
+            />
+            <CardGroup>
+              { filmResponse.map(film =>
+                <FilmCard key={film.film_id}
+                filmInfo={film}
+                  fetchFilms={() => FetchFilteredList(0)}
+                  />
+              )}
+            </CardGroup>
+        </div>
       </div>
-
-      <div className='film-list'>
-      <AddCard 
-        updateFilms={() => FetchFilteredList(0)}
-        />
-
-      { filmResponse.map(film =>
-        <FilmCard key={film.film_id}
-        filmInfo={film}
-          fetchFilms={() => FetchFilteredList(0)}
-          />
-      )}
-    </div>
-    </div>
     </div>
   );
 }

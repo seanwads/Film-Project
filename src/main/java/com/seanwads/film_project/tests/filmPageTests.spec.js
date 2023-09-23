@@ -55,7 +55,8 @@ test('edit film', async({ page }) => {
         .click(); 
     
     //Fill update input field and submit
-    await page.getByRole('textbox').fill('EDIT_TEST_PLACEHOLDER');
+    await page.getByTestId('nameTextbox').fill('EDIT_TEST_PLACEHOLDER');
+    await page.getByTestId('descTextbox').fill('EDIT_TEST_PLACEHOLDER');
     await page.getByRole('button', {name:'Submit'}).click();
 
     //Assert that film has been edited and page has been updated
