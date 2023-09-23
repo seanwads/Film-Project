@@ -62,7 +62,7 @@ public class FilmController {
         }
     }
 
-    @GetMapping(path = "/deleteFilmByID")
+    @DeleteMapping(path = "/deleteFilmByID")
     public @ResponseBody String deleteFilmByID(@RequestParam Integer id) {
         if (getFilmByID(id).isPresent()) {
             Film filmToDelete = getFilmByID(id).get();

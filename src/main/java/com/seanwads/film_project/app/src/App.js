@@ -45,7 +45,7 @@ export default function App() {
         />
 
       { filmResponse.map(film =>
-        <FilmCard key={film.id}
+        <FilmCard key={film.film_id}
         filmInfo={film}
           fetchFilms={() => FetchFilteredList(0)}
           />

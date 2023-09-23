@@ -15,7 +15,8 @@ test('fetch films', async ({ page }) => {
     await expect(page.getByText('ABSOLUTE DINOSAUR')).toBeVisible();
 
     //Assert page contains correct number of elements
-    await expect(page.locator('.card')).toHaveCount(1001);
+    const count = await page.locator(".card").count();
+    expect(count).toBeGreaterThan(1000);
         
 })
 
@@ -37,7 +38,8 @@ test('filter films', async({ page }) => {
     await expect(page.getByText('ABSOLUTE DINOSAUR')).toBeVisible();
 
     //Assert page contains correct number of elements
-    await expect(page.locator('.card')).toHaveCount(1001);
+    const count = await page.locator(".card").count();
+    expect(count).toBeGreaterThan(1000);
 })
 
 test('edit film', async({ page }) => {

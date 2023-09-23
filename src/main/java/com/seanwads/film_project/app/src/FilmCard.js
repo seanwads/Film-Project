@@ -12,7 +12,7 @@ export default function FilmCard({ filmInfo, fetchFilms, updateCardCount }){
     
 
     return (
-        <Card key={filmInfo.id} data-testid={'film-card-' + filmInfo.id}>
+        <Card key={filmInfo.film_id} data-testid={'film-card-' + filmInfo.film_id}>
             {updateActive
                 ? <UpdateForm 
                     film={filmInfo}
@@ -31,7 +31,7 @@ export default function FilmCard({ filmInfo, fetchFilms, updateCardCount }){
 function InfoCard({ film, updateFilm, fetchFilmList }){
 
     async function deleteFilm(){
-        await fetch('http://localhost:8080/demo/deleteFilmByID?id=' + film.id);
+        await fetch('http://localhost:8080/demo/deleteFilmByID?id=' + film.film_id, {method:'DELETE'});
         fetchFilmList();
       }
 
@@ -47,7 +47,7 @@ function InfoCard({ film, updateFilm, fetchFilmList }){
                 </CardText>
 
                 <ButtonGroup>
-                <Button color='primary' outline onClick={() => updateFilm(film.id)}>Update</Button>
+                <Button color='primary' outline onClick={() => updateFilm(film.film_id)}>Update</Button>
                 <Button color='danger' outline onClick={() => deleteFilm()}>Delete</Button>
                 </ButtonGroup>
 
@@ -65,11 +65,11 @@ function UpdateForm({ film, updateFilm, fetchFilmList }){
           method:'PUT',
           headers:{'Content-Type': 'application/json'},
           body: JSON.stringify({
-            "id": film.id,
+            "film_id": film.film_id,
             "title": event.target.nameEditInput.value,
             "description": film.description,
-            "year": film.year,
-            "language_id": film.language_id
+            "releaseYear": film.year,
+            "languageId": film.language_id
           })
         });
     

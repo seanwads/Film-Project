@@ -41,7 +41,7 @@ export default function AddCard({ updateFilms}){
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-          "id": "0",
+          "film_id": 0,
           "title": event.target.titleInput.value,
           "description": event.target.descriptionInput.value,
           "releaseYear": event.target.yearInput.value,

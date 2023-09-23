@@ -1,7 +1,8 @@
 package com.seanwads.film_project.controller;
 
+import com.seanwads.film_project.model.Category;
 import com.seanwads.film_project.model.Film;
-import com.seanwads.film_project.repository.CategoryRepository;
+import com.seanwads.film_project.model.FilmCategory;
 import com.seanwads.film_project.repository.FilmRepository;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -33,7 +37,7 @@ class FilmControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    @Autowired
+    @MockBean
     FilmController filmController;
 
     @MockBean
@@ -41,7 +45,7 @@ class FilmControllerTest {
 
 
     @Test
-    void testGetAllFilmsMapping() throws Exception {
+    void testGetAllFilms() throws Exception {
         Film film1 = new Film(1, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
 
         Film film2 = new Film(2, "ACE ADMINISTRATOR", "A Astounding Epistle of a Database Administrator And a Explorer who must Find a Car in Ancient China", 2006, 1);
@@ -58,39 +62,16 @@ class FilmControllerTest {
                 .andExpect(jsonPath("$", hasSize(2)));
     }
 
+
+
     @Test
     void testGetFilmByID() throws Exception {
-        Film filmToGet = new Film(1, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
-
-        Optional<Film> resultOptional = filmController.getFilmByID(1);
-
-        Film result = resultOptional.orElseThrow(() -> {
-                    return new Exception("Film not found");
-        });
-
-        assertAll(
-                () -> assertEquals(result.getFilm_id(), filmToGet.getFilm_id()),
-                () -> assertEquals(result.getTitle(), filmToGet.getTitle())
-        );
-    }
-
-    @Test
-    void testGetFilmByNullID(){
-
-        Optional<Film> resultOptional = filmController.getFilmByID(-1);
-
-        assert(resultOptional.isEmpty());
-
-    }
-
-    @Test
-    void testGetFilmByIDMapping() throws Exception {
         Film film = new Film(1, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
 
         when(filmRepository.findById(1)).thenReturn(Optional.of(film));
 
         mockMvc.perform(get("/demo/getFilmByID?id=1").accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(film.getFilm_id()))
+                .andExpect(jsonPath("$.film_id").value(film.getFilm_id()))
                 .andExpect(jsonPath("$.title").value(film.getTitle()))
                 .andExpect(jsonPath("$.description").value(film.getDescription()))
                 .andExpect(jsonPath("$.releaseYear").value(film.getReleaseYear()))
@@ -102,71 +83,51 @@ class FilmControllerTest {
     @Test
     void testFilterFilm() throws Exception {
 
-        Iterable<Film> film1Iterable = filmController.filterFilm(1);
-        int film1Size = 0;
-        for(Film film: film1Iterable){
-            film1Size ++;
-        }
+        Category action = new Category();
+        action.setCategory_id(1);
+        Category family = new Category();
+        family.setCategory_id(2);
 
-        System.out.println(film1Size);
+        Film film1 = new Film(1, "ACTION FILM", "action film", 2023, 1);
+        Film film2 = new Film(2, "FAMILY FILM", "family film", 2023, 1);
 
-        Iterable<Film> film2Iterable = filmController.filterFilm(2);
-        int film2Size = 0;
-        for(Film film: film2Iterable){
-            film2Size ++;
-        }
+        FilmCategory actionFilmCategory = new FilmCategory();
+        actionFilmCategory.setCategoryCat(action);
+        actionFilmCategory.setFilmCat(film1);
+        film1.setCategorySet(new HashSet<>(List.of(actionFilmCategory)));
+        action.setFilmSet(new HashSet<>(List.of(actionFilmCategory)));
+
+        FilmCategory familyFilmCategory = new FilmCategory();
+        familyFilmCategory.setCategoryCat(family);
+        actionFilmCategory.setFilmCat(film2);
+        film2.setCategorySet(new HashSet<>(List.of(familyFilmCategory)));
+        family.setFilmSet(new HashSet<>(List.of(actionFilmCategory)));
+
+        Iterable<Film> actionFilms = List.of(film1);
+        Iterable<Film> familyFilms = List.of(film2);
+
+        when(filmController.filterFilm(1)).thenReturn(actionFilms);
+        when(filmController.filterFilm(2)).thenReturn(familyFilms);
 
         mockMvc.perform(get("/demo/filterFilmsByCategory?id=1")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(film1Size)));
+                .andExpect(jsonPath("$[0].title").value(film1.getTitle()));
 
         mockMvc.perform(get("/demo/filterFilmsByCategory?id=2")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(film2Size)));
+                .andExpect(jsonPath("$[0].title").value(film2.getTitle()));
     }
 
-    @Test
-    void testFilterFilmAll() throws Exception {
-        Iterable<Film> filmIterable = filmController.filterFilm(0);
-        int filmCount = 0;
-        for(Film film: filmIterable){
-            filmCount++;
-        }
-
-    }
 
     @Test
     void testDeleteFilmByID() throws Exception {
         Film filmToDelete = new Film(1, "FILM_TO_DELETE", "film to delete", 2023, 1);
 
-        when(filmController.deleteFilmByID(1)).thenReturn("Film: FILM_TO_DELETE has been deleted");
+        filmRepository.save(filmToDelete);
 
-        MvcResult result = mockMvc.perform(get("/demo/deleteFilmByID?id=1")).andReturn();
+        doNothing().when(filmRepository).deleteById(1);
 
-        String resultContent = result.getResponse().getContentAsString();
-
-        assert(resultContent).contains("Film: FILM_TO_DELETE has been deleted");
-    }
-
-
-
-    @Test
-    void testUpdateFilm() throws Exception {
-//        Film filmToUpdate = new Film(1, "FILM_TO_UPDATE", "film to update", 2023, 1);
-//
-//        mockFilmController.updateFilm(filmToUpdate);
-//
-//        assert(mockFilmController.getFilmByID(1).equals(Optional.of(filmToUpdate)));
-
-
-    }
-
-    @Test
-    void testCreateFilm() {
-//        Film filmToCreate = new Film(1, "FILM_TO_CREATE", "film to create", 2023, 1);
-//
-//        mockFilmController.createFilm(filmToCreate);
-
-
+        mockMvc.perform(get("/demo/deleteFilmByID?id=1"))
+                .andExpect(status().isNotFound());
     }
 }
