@@ -107,4 +107,25 @@ public class FilmController {
             return Optional.empty();
         }
     }
+    @GetMapping(path="/getCategoryNames")
+    public @ResponseBody List<String> getCategoryNames(@RequestParam Integer id){
+        Optional<Film> filmOptional = getFilmByID(id);
+
+        if(filmOptional.isPresent()){
+            Film film = filmOptional.get();
+            Set<FilmCategory> filmCategorySet = film.getCategorySet();
+
+            List<String> names = new ArrayList<>();
+
+            for(FilmCategory filmCategory : filmCategorySet){
+                Category category = filmCategory.getCategoryCat();
+                names.add(category.getName());
+            }
+
+            return names;
+        }
+        else {
+            return null;
+        }
+    }
 }

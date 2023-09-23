@@ -1,14 +1,24 @@
-import {  useState } from 'react';
-import { Button, Card, CardBody, CardTitle, CardText, ButtonGroup, Form, FormGroup, Label, Input } from 'reactstrap';
+import {  useEffect, useState } from 'react';
+import { Button, Card, CardBody, CardTitle, CardText, ButtonGroup, Form, FormGroup, Label, Input, CardSubtitle } from 'reactstrap';
 
 export default function FilmCard({ filmInfo, fetchFilms, updateCardCount }){
   
     const[updateActive, setUpdateActive] = useState(false);
+    const[category, setCategory] = useState("");
+
+    // useEffect(() => {
+    //     fetchCategoryName();
+    // })
   
     async function updateCard(){
         setUpdateActive(!updateActive);
     }
     
+    // async function fetchCategoryName(){
+    //     const response = await fetch('http://localhost:8080/demo/getCategoryNames?id=' + filmInfo.film_id);
+    //     const body = await response.json;
+    //     setCategory(body);
+    // }
 
     return (
         <Card key={filmInfo.film_id} data-testid={'film-card-' + filmInfo.film_id} style={{minWidth: '50rem', padding:'15px', margin: '15px'}}>
@@ -20,14 +30,15 @@ export default function FilmCard({ filmInfo, fetchFilms, updateCardCount }){
                 : <InfoCard
                     film={filmInfo}
                     updateFilm={() => updateCard()}
-                    fetchFilmList={() => fetchFilms(0)}/>
+                    fetchFilmList={() => fetchFilms(0)}
+                    categoryName={category}/>
             }
         </Card>
     )
     
 }
 
-function InfoCard({ film, updateFilm, fetchFilmList }){
+function InfoCard({ film, updateFilm, fetchFilmList, categoryName }){
 
     async function deleteFilm(){
         await fetch('http://localhost:8080/demo/deleteFilmByID?id=' + film.film_id, {method:'DELETE'});
@@ -40,6 +51,10 @@ function InfoCard({ film, updateFilm, fetchFilmList }){
                 <CardTitle>
                     { film.title } 
                 </CardTitle>
+
+                <CardSubtitle>
+                    {  }
+                </CardSubtitle>
 
                 <CardText>
                     {film.description}
