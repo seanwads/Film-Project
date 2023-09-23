@@ -16,27 +16,28 @@ public class Category {
     @Column(name="category_id")
     private Integer category_id;
 
+    @Column(name="name")
+    private String name;
+
+    @Column(name = "last_update")
+    private Time lastUpdate;
+
+    @OneToMany(mappedBy = "categoryCat", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+    @JsonIgnore
+    private Set<FilmCategory> filmSet = new HashSet<>();
+
+
     public void setCategory_id(Integer category_id) {
         this.category_id = category_id;
     }
-
-    @Column(name="name")
-    private String name;
 
     public void setName(String name) {
         this.name = name;
     }
 
-    @Column(name = "last_update")
-    private Time lastUpdate;
-
     public void setLastUpdate(Time lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
-
-    @OneToMany(mappedBy = "categoryCat", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
-    @JsonIgnore
-    private Set<FilmCategory> filmSet = new HashSet<>();
 
     public void setFilmSet(Set<FilmCategory> filmSet) {
         this.filmSet = filmSet;
