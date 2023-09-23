@@ -123,11 +123,12 @@ class FilmControllerTest {
     void testDeleteFilmByID() throws Exception {
         Film filmToDelete = new Film(1, "FILM_TO_DELETE", "film to delete", 2023, 1);
 
-        filmRepository.save(filmToDelete);
+        when(filmRepository.save(filmToDelete)).thenReturn(filmToDelete);
+        when(filmController.deleteFilmByID(1)).thenReturn("Film: FILM_TO_DELETE has been deleted");
 
-        doNothing().when(filmRepository).deleteById(1);
+        MvcResult result = mockMvc.perform(delete("/demo/deleteFilmByID?id=1")).andReturn();
+        String resultBody = result.getResponse().getContentAsString();
 
-        mockMvc.perform(get("/demo/deleteFilmByID?id=1"))
-                .andExpect(status().isNotFound());
+        assertEquals(resultBody, "Film: FILM_TO_DELETE has been deleted");
     }
 }
