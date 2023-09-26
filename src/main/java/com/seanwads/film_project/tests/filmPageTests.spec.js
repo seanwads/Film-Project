@@ -55,12 +55,12 @@ test('edit film', async({ page }) => {
         .click(); 
     
     //Fill update input field and submit
-    await page.getByTestId('nameTextbox').fill('EDIT_TEST_PLACEHOLDER');
-    await page.getByTestId('descTextbox').fill('EDIT_TEST_PLACEHOLDER');
+    await page.getByTestId('nameTextbox').fill('EDIT_TEST_PLACEHOLDER_TITLE');
+    await page.getByTestId('descTextbox').fill('EDIT_TEST_PLACEHOLDER_DESC');
     await page.getByRole('button', {name:'Submit'}).click();
 
     //Assert that film has been edited and page has been updated
-    await expect(page.getByText('EDIT_TEST_PLACEHOLDER')).toBeVisible();
+    await expect(page.getByText('EDIT_TEST_PLACEHOLDER_TITLE')).toBeVisible();
 
     //Open update menu for first film in list
     await page
@@ -69,7 +69,8 @@ test('edit film', async({ page }) => {
         .click(); 
     
     //Reset film name to original
-    await page.getByRole('textbox').fill('ABSOLUTE DINOSAUR');
+    await page.getByTestId('nameTextbox').fill('ABSOLUTE DINOSAUR');
+    await page.getByTestId('descTextbox').fill('A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies');
     await page.getByRole('button', {name:'Submit'}).click();
 })
 
