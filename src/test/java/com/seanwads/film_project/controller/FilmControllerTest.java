@@ -133,6 +133,18 @@ class FilmControllerTest {
 
     }
 
+    @Test
+    void testDeleteFilmUnsuccessful() throws Exception {
+        Integer id = 1;
+
+        when(filmRepository.findById(1)).thenReturn(Optional.empty());
+
+        MvcResult result = mockMvc.perform(delete("/demo/deleteFilmByID?id=" + id)).andReturn();
+        String resultBody = result.getResponse().getContentAsString();
+
+        assert(resultBody.equals("Requested film not found"));
+    }
+
 
 //    @Test
 //    void testFilterFilm() throws Exception {
