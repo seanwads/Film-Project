@@ -182,7 +182,44 @@ class FilmControllerTest {
                         "\"title\": \"ABSOLUTE DINOSAUR\", " +
                         "\"description\": \"A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies\", " +
                         "\"releaseYear\": 2006, " +
-                        "\"languageId\": 1}"))
+                        "\"languageId\": 1}")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").doesNotExist());
+    }
+
+    @Test
+    void testUpdateFilmSuccessful() throws Exception {
+        Integer id = 1;
+        Film film = new Film(id, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
+
+        when(filmRepository.findById(id)).thenReturn(Optional.of(film));
+        when(filmRepository.save(film)).thenReturn(film);
+
+        mockMvc.perform(put("/demo/updateFilm")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"film_id\": 1, " +
+                        "\"title\": \"ABSOLUTE DINOSAUR\", " +
+                        "\"description\": \"A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies\", " +
+                        "\"releaseYear\": 2006, " +
+                        "\"languageId\": 1}")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.film_id").value(film.getFilm_id()));
+    }
+
+    @Test
+    void testUpdateFilmUnsuccessful() throws Exception {
+        Integer id = 1;
+
+        when(filmRepository.findById(id)).thenReturn(Optional.empty());
+
+        mockMvc.perform(put("/demo/updateFilm")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"film_id\": 1, " +
+                        "\"title\": \"ABSOLUTE DINOSAUR\", " +
+                        "\"description\": \"A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies\", " +
+                        "\"releaseYear\": 2006, " +
+                        "\"languageId\": 1}")
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist());
     }
 }
