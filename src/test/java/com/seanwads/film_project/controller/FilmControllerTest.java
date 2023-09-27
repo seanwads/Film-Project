@@ -3,6 +3,7 @@ import com.seanwads.film_project.model.Category;
 import com.seanwads.film_project.model.Film;
 import com.seanwads.film_project.model.FilmCategory;
 import com.seanwads.film_project.repository.FilmRepository;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -145,37 +147,42 @@ class FilmControllerTest {
         assert(resultBody.equals("Requested film not found"));
     }
 
-
-//    @Test
-//    void testFilterFilm() throws Exception {
-//
-
-//        Iterable<Film> actionFilms = List.of(film1);
-//        Iterable<Film> familyFilms = List.of(film2);
-//
-////        when(filmController.filterFilm(1)).thenReturn(actionFilms);
-////        when(filmController.filterFilm(2)).thenReturn(familyFilms);
-//
-//        mockMvc.perform(get("/demo/filterFilmsByCategory?id=1")
-//                .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$[0].title").value(film1.getTitle()));
-//
-//        mockMvc.perform(get("/demo/filterFilmsByCategory?id=2")
-//                .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$[0].title").value(film2.getTitle()));
-//    }
-
-
-//    @Test
-//    void testDeleteFilmByID() throws Exception {
+    @Test
+    void testCreateFilmSuccessful() throws Exception {
+        // todo: fix this!
 //        Integer id = 1;
-//        Film filmToDelete = new Film(id, "FILM_TO_DELETE", "film to delete", 2023, 1);
+//        Film film = new Film(id, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
 //
-//        when(filmRepository.deleteById(id)).thenReturn()
+//        when(filmRepository.save(film)).thenReturn(film);
+//        when(filmRepository.findById(id)).thenReturn(Optional.of(film));
 //
-//        MvcResult result = mockMvc.perform(delete("/demo/deleteFilmByID?id=1")).andReturn();
-//        String resultBody = result.getResponse().getContentAsString();
-//
-//        assertEquals(resultBody, "Film: FILM_TO_DELETE has been deleted");
-//    }
+//        mockMvc.perform(post("/demo/createFilm")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content("{\"film_id\": 1, " +
+//                        "\"title\": \"ABSOLUTE DINOSAUR\", " +
+//                        "\"description\": \"A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies\", " +
+//                        "\"releaseYear\": 2006, " +
+//                        "\"languageId\": 1}"))
+//                .andExpect(jsonPath("$[0].film_id").value(film.getFilm_id()))
+//                .andExpect(jsonPath("$[0].title").value(film.getTitle()));
+
+    }
+
+    @Test
+    void testCreateFilmUnsuccessful() throws Exception {
+        Integer id = 1;
+        Film film = new Film(id, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
+
+        when(filmRepository.save(film)).thenReturn(film);
+        when(filmRepository.findById(id)).thenReturn(Optional.empty());
+
+        mockMvc.perform(post("/demo/createFilm")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"film_id\": 1, " +
+                        "\"title\": \"ABSOLUTE DINOSAUR\", " +
+                        "\"description\": \"A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies\", " +
+                        "\"releaseYear\": 2006, " +
+                        "\"languageId\": 1}"))
+                .andExpect(jsonPath("$").doesNotExist());
+    }
 }
