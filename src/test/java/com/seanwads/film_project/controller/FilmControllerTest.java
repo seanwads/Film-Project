@@ -1,5 +1,7 @@
 package com.seanwads.film_project.controller;
+import com.seanwads.film_project.model.Category;
 import com.seanwads.film_project.model.Film;
+import com.seanwads.film_project.model.FilmCategory;
 import com.seanwads.film_project.repository.FilmRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +9,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,30 +87,57 @@ class FilmControllerTest {
 
     }
 
+    @Test
+    void testFilterFilm() throws Exception {
+        Category action = new Category();
+        action.setCategory_id(1);
+        Category family = new Category();
+        family.setCategory_id(2);
+
+        Film film1 = new Film(1, "ACTION FILM", "action film", 2023, 1);
+        Film film2 = new Film(2, "FAMILY FILM", "family film", 2023, 1);
+
+        FilmCategory actionFilmCategory = new FilmCategory();
+        actionFilmCategory.setCategoryCat(action);
+        actionFilmCategory.setFilmCat(film1);
+        film1.setCategorySet(new HashSet<>(List.of(actionFilmCategory)));
+        action.setFilmSet(new HashSet<>(List.of(actionFilmCategory)));
+
+        FilmCategory familyFilmCategory = new FilmCategory();
+        familyFilmCategory.setCategoryCat(family);
+        actionFilmCategory.setFilmCat(film2);
+        film2.setCategorySet(new HashSet<>(List.of(familyFilmCategory)));
+        family.setFilmSet(new HashSet<>(List.of(actionFilmCategory)));
+
+        List<Film> films = Arrays.asList(film1, film2);
+
+        when(filmRepository.findAll()).thenReturn(films);
+
+        mockMvc.perform(get("/demo/filterFilmsByCategory?id=1").accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].title").value(film1.getTitle()));
+
+    }
+
+    @Test
+    void testDeleteFilmSuccessful() throws Exception {
+        Integer id = 1;
+        Film film = new Film(id, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
+
+        when(filmRepository.findById(id)).thenReturn(Optional.of(film));
+        doNothing().when(filmRepository).deleteById(id);
+
+        MvcResult result = mockMvc.perform(delete("/demo/deleteFilmByID?id=" + id)).andReturn();
+        String resultBody = result.getResponse().getContentAsString();
+
+        assert(resultBody.equals("Film: ABSOLUTE DINOSAUR has been deleted"));
+
+    }
+
 
 //    @Test
 //    void testFilterFilm() throws Exception {
 //
-//        Category action = new Category();
-//        action.setCategory_id(1);
-//        Category family = new Category();
-//        family.setCategory_id(2);
-//
-//        Film film1 = new Film(1, "ACTION FILM", "action film", 2023, 1);
-//        Film film2 = new Film(2, "FAMILY FILM", "family film", 2023, 1);
-//
-//        FilmCategory actionFilmCategory = new FilmCategory();
-//        actionFilmCategory.setCategoryCat(action);
-//        actionFilmCategory.setFilmCat(film1);
-//        film1.setCategorySet(new HashSet<>(List.of(actionFilmCategory)));
-//        action.setFilmSet(new HashSet<>(List.of(actionFilmCategory)));
-//
-//        FilmCategory familyFilmCategory = new FilmCategory();
-//        familyFilmCategory.setCategoryCat(family);
-//        actionFilmCategory.setFilmCat(film2);
-//        film2.setCategorySet(new HashSet<>(List.of(familyFilmCategory)));
-//        family.setFilmSet(new HashSet<>(List.of(actionFilmCategory)));
-//
+
 //        Iterable<Film> actionFilms = List.of(film1);
 //        Iterable<Film> familyFilms = List.of(film2);
 //
