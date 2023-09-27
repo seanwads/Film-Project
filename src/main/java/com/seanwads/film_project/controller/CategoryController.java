@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Optional;
@@ -18,11 +19,11 @@ public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @RequestMapping("/getCategories")
+    @RequestMapping(path = "/getCategories", method = RequestMethod.GET)
     private @ResponseBody Iterable<Category> getCategories(){
         return categoryRepository.findAll();
     }
 
-    @RequestMapping("/getCatById")
+    @RequestMapping(path = "/getCatByID", method = RequestMethod.GET)
     private @ResponseBody Optional<Category> getCategoryById(Integer id) {return categoryRepository.findById(id);}
 }

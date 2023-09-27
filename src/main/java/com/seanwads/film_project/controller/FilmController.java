@@ -17,13 +17,13 @@ public class FilmController {
     @Autowired
     private FilmRepository filmRepository;
 
-    @GetMapping(path = "/allFilms")
+    @RequestMapping(path = "/allFilms", method = RequestMethod.GET)
     public @ResponseBody Iterable<Film> getAllFilms() {return filmRepository.findAll();}
 
-    @GetMapping(path = "/getFilmByID")
+    @RequestMapping(path = "/getFilmByID", method = RequestMethod.GET)
     public @ResponseBody Optional<Film> getFilmByID(@RequestParam Integer id) {return filmRepository.findById(id);}
 
-    @GetMapping(path = "/filterFilmsByCategory")
+    @RequestMapping(path = "/filterFilmsByCategory", method = RequestMethod.GET)
     public @ResponseBody Iterable<Film> filterFilm(@RequestParam Integer id) {
 
         if (id == 0) {
@@ -62,7 +62,7 @@ public class FilmController {
         }
     }
 
-    @DeleteMapping(path = "/deleteFilmByID")
+    @RequestMapping(path = "/deleteFilmByID", method = RequestMethod.DELETE)
     public @ResponseBody String deleteFilmByID(@RequestParam Integer id) {
         if (getFilmByID(id).isPresent()) {
             Film filmToDelete = getFilmByID(id).get();
@@ -75,7 +75,7 @@ public class FilmController {
         }
     }
 
-    @PostMapping(path="/createFilm")
+    @RequestMapping(path="/createFilm", method = RequestMethod.POST)
     public @ResponseBody Optional<Film> createFilm(@RequestBody Film filmParam){
         try{
             Film film = filmRepository.save(new Film(filmParam.getFilm_id(), filmParam.getTitle(), filmParam.getDescription(), filmParam.getReleaseYear(), filmParam.getLanguageId()));
@@ -92,7 +92,7 @@ public class FilmController {
         }
     }
 
-    @PutMapping(path="/updateFilm")
+    @RequestMapping(path="/updateFilm", method = RequestMethod.PUT)
     public @ResponseBody Optional<Film> updateFilm(@RequestBody Film filmParam){
         Optional<Film> filmOptional = getFilmByID(filmParam.getFilm_id());
 
