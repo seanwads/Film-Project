@@ -1,8 +1,5 @@
 package com.seanwads.film_project.controller;
-
-import com.seanwads.film_project.model.Category;
 import com.seanwads.film_project.model.Film;
-import com.seanwads.film_project.model.FilmCategory;
 import com.seanwads.film_project.repository.FilmRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +7,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -69,6 +63,24 @@ class FilmControllerTest {
                 .andExpect(jsonPath("$.releaseYear").value(film.getReleaseYear()))
                 .andExpect(jsonPath("$.languageId").value(film.getLanguageId()))
                 .andDo(print());
+    }
+
+    @Test
+    void testFilterFilmAll() throws Exception {
+
+        Film film1 = new Film(1, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
+
+        Film film2 = new Film(2, "ACE ADMINISTRATOR", "A Astounding Epistle of a Database Administrator And a Explorer who must Find a Car in Ancient China", 2006, 1);
+
+        List<Film> films = Arrays.asList(film1, film2);
+
+        when(filmRepository.findAll()).thenReturn(films);
+
+        mockMvc.perform(get("/demo/filterFilmsByCategory?id=0").accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].film_id").value(film1.getFilm_id()))
+                .andExpect(jsonPath("$[1].film_id").value(film2.getFilm_id()))
+                .andExpect(jsonPath("$", hasSize(2)));
+
     }
 
 
