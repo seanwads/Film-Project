@@ -2,6 +2,7 @@ package com.seanwads.film_project.controller;
 import com.seanwads.film_project.model.Category;
 import com.seanwads.film_project.model.Film;
 import com.seanwads.film_project.model.FilmCategory;
+import com.seanwads.film_project.model.Rating;
 import com.seanwads.film_project.repository.FilmRepository;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -13,10 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
@@ -200,5 +198,45 @@ class FilmControllerTest {
                         "\"languageId\": 1}")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist());
+    }
+
+    @Test
+    void testGetCategoryNameSuccessful() throws Exception {
+        Integer id = 1;
+        Category action = new Category();
+        action.setCategory_id(1);
+
+        Film film= new Film(id, "ACTION FILM", "action film", 2023, 1);
+
+        FilmCategory actionFilmCategory = new FilmCategory();
+        actionFilmCategory.setCategoryCat(action);
+        actionFilmCategory.setFilmCat(film);
+        film.setCategorySet(new HashSet<>(List.of(actionFilmCategory)));
+        action.setFilmSet(new HashSet<>(List.of(actionFilmCategory)));
+        action.setName("action");
+
+        when(filmRepository.findById(id)).thenReturn(Optional.of(film));
+
+        mockMvc.perform(get("/getCategory?id=" + id)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].name").value("action"));
+    }
+
+    @Test
+    void testFilterFilmsByRating() throws Exception {
+        Film film1 = new Film(1, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
+        film1.setRating(Rating.PG);
+
+        Film film2 = new Film(2, "ACE ADMINISTRATOR", "A Astounding Epistle of a Database Administrator And a Explorer who must Find a Car in Ancient China", 2006, 1);
+        film2.setRating(Rating.R);
+
+        List<Film> films = Arrays.asList(film1, film2);
+
+        when(filmRepository.findAll()).thenReturn(films);
+
+        mockMvc.perform(get("/filterFilmsByRating?rating=PG")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].film_id").value(1))
+                .andExpect(jsonPath("$", hasSize(1)));
     }
 }
