@@ -12,10 +12,12 @@ import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @Controller
-@RequestMapping(path="/demo")
 public class FilmController {
     @Autowired
     private FilmRepository filmRepository;
+
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public @ResponseBody Iterable<Film> defaultMethod() {return filmRepository.findAll();}
 
     @RequestMapping(path = "/allFilms", method = RequestMethod.GET)
     public @ResponseBody Iterable<Film> getAllFilms() {return filmRepository.findAll();}

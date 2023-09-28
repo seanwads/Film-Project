@@ -44,7 +44,7 @@ class FilmControllerTest {
 
         when(filmRepository.findAll()).thenReturn(films);
 
-        mockMvc.perform(get("/demo/allFilms")
+        mockMvc.perform(get("/allFilms")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].film_id").value(film1.getFilm_id()))
                 .andExpect(jsonPath("$[1].film_id").value(film2.getFilm_id()))
@@ -62,7 +62,7 @@ class FilmControllerTest {
 
         when(filmRepository.findById(id)).thenReturn(Optional.of(film));
 
-        mockMvc.perform(get("/demo/getFilmByID?id=1").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/getFilmByID?id=1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.film_id").value(film.getFilm_id()))
                 .andExpect(jsonPath("$.title").value(film.getTitle()))
                 .andExpect(jsonPath("$.description").value(film.getDescription()))
@@ -82,7 +82,7 @@ class FilmControllerTest {
 
         when(filmRepository.findAll()).thenReturn(films);
 
-        mockMvc.perform(get("/demo/filterFilmsByCategory?id=0").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/filterFilmsByCategory?id=0").accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].film_id").value(film1.getFilm_id()))
                 .andExpect(jsonPath("$[1].film_id").value(film2.getFilm_id()))
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -115,7 +115,7 @@ class FilmControllerTest {
 
         when(filmRepository.findAll()).thenReturn(films);
 
-        mockMvc.perform(get("/demo/filterFilmsByCategory?id=1").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/filterFilmsByCategory?id=1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].title").value(film1.getTitle()));
 
     }
@@ -128,7 +128,7 @@ class FilmControllerTest {
         when(filmRepository.findById(id)).thenReturn(Optional.of(film));
         doNothing().when(filmRepository).deleteById(id);
 
-        MvcResult result = mockMvc.perform(delete("/demo/deleteFilmByID?id=" + id)).andReturn();
+        MvcResult result = mockMvc.perform(delete("/deleteFilmByID?id=" + id)).andReturn();
         String resultBody = result.getResponse().getContentAsString();
 
         assert(resultBody.equals("Film: ABSOLUTE DINOSAUR has been deleted"));
@@ -141,31 +141,10 @@ class FilmControllerTest {
 
         when(filmRepository.findById(1)).thenReturn(Optional.empty());
 
-        MvcResult result = mockMvc.perform(delete("/demo/deleteFilmByID?id=" + id)).andReturn();
+        MvcResult result = mockMvc.perform(delete("/deleteFilmByID?id=" + id)).andReturn();
         String resultBody = result.getResponse().getContentAsString();
 
         assert(resultBody.equals("Requested film not found"));
-    }
-
-    @Test
-    void testCreateFilmSuccessful() throws Exception {
-        // todo: fix this!
-//        Integer id = 1;
-//        Film film = new Film(id, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
-//
-//        when(filmRepository.save(film)).thenReturn(film);
-//        when(filmRepository.findById(id)).thenReturn(Optional.of(film));
-//
-//        mockMvc.perform(post("/demo/createFilm")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content("{\"film_id\": 1, " +
-//                        "\"title\": \"ABSOLUTE DINOSAUR\", " +
-//                        "\"description\": \"A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies\", " +
-//                        "\"releaseYear\": 2006, " +
-//                        "\"languageId\": 1}"))
-//                .andExpect(jsonPath("$[0].film_id").value(film.getFilm_id()))
-//                .andExpect(jsonPath("$[0].title").value(film.getTitle()));
-
     }
 
     @Test
@@ -176,7 +155,7 @@ class FilmControllerTest {
         when(filmRepository.save(film)).thenReturn(film);
         when(filmRepository.findById(id)).thenReturn(Optional.empty());
 
-        mockMvc.perform(post("/demo/createFilm")
+        mockMvc.perform(post("/createFilm")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"film_id\": 1, " +
                         "\"title\": \"ABSOLUTE DINOSAUR\", " +
@@ -195,7 +174,7 @@ class FilmControllerTest {
         when(filmRepository.findById(id)).thenReturn(Optional.of(film));
         when(filmRepository.save(film)).thenReturn(film);
 
-        mockMvc.perform(put("/demo/updateFilm")
+        mockMvc.perform(put("/updateFilm")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"film_id\": 1, " +
                         "\"title\": \"ABSOLUTE DINOSAUR\", " +
@@ -212,7 +191,7 @@ class FilmControllerTest {
 
         when(filmRepository.findById(id)).thenReturn(Optional.empty());
 
-        mockMvc.perform(put("/demo/updateFilm")
+        mockMvc.perform(put("/updateFilm")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"film_id\": 1, " +
                         "\"title\": \"ABSOLUTE DINOSAUR\", " +
