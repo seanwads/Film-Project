@@ -1,5 +1,6 @@
 package com.seanwads.film_project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 

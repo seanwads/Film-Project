@@ -3,6 +3,7 @@ package com.seanwads.film_project.controller;
 import com.seanwads.film_project.model.Category;
 import com.seanwads.film_project.model.Film;
 import com.seanwads.film_project.model.FilmCategory;
+import com.seanwads.film_project.model.Rating;
 import com.seanwads.film_project.repository.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,7 @@ public class FilmController {
     public @ResponseBody Optional<Film> getFilmByID(@RequestParam Integer id) {return filmRepository.findById(id);}
 
     @RequestMapping(path = "/filterFilmsByCategory", method = RequestMethod.GET)
-    public @ResponseBody Iterable<Film> filterFilm(@RequestParam Integer id) {
+    public @ResponseBody Iterable<Film> filterFilmByCat(@RequestParam Integer id) {
 
         if (id == 0) {
             return filmRepository.findAll();
@@ -62,6 +63,24 @@ public class FilmController {
             filmList.removeAll(filmsToRemove);
             return filmList;
         }
+    }
+
+    @RequestMapping(path="/filterFilmsByRating", method = RequestMethod.GET)
+    public @ResponseBody Iterable<Film> filterFilmsByRating(@RequestParam Rating rating){
+        Iterable<Film> filmIterable = getAllFilms();
+        List<Film> filmList = new ArrayList<Film>();
+        filmIterable.forEach(filmList::add);
+
+        List<Film> filmsToRemove = new ArrayList<Film>();
+
+        for(Film film : filmList) {
+            if(film.getRating() != rating){
+                filmsToRemove.add(film);
+            }
+        }
+
+        filmList.removeAll(filmsToRemove);
+        return filmList;
     }
 
     @RequestMapping(path = "/deleteFilmByID", method = RequestMethod.DELETE)
@@ -114,19 +133,18 @@ public class FilmController {
     public @ResponseBody Iterable<Category> getCategoryName(@RequestParam Integer id){
         List<Category> categories = new ArrayList<Category>();
 
-        if(getFilmByID(id).isPresent()){
-           Film film = getFilmByID(id).get();
-           Set<FilmCategory> filmCategorySet = film.getCategorySet();
+        if(getFilmByID(id).isPresent()) {
+            Film film = getFilmByID(id).get();
+            Set<FilmCategory> filmCategorySet = film.getCategorySet();
 
-           if(!filmCategorySet.isEmpty()){
+            if (!filmCategorySet.isEmpty()) {
 
-                for(FilmCategory fc : filmCategorySet){
+                for (FilmCategory fc : filmCategorySet) {
                     Category category = fc.getCategoryCat();
                     categories.add(category);
                 }
-           }
+            }
         }
-
         return categories;
     }
 }
