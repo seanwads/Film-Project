@@ -109,4 +109,24 @@ public class FilmController {
             return Optional.empty();
         }
     }
+
+    @RequestMapping(path="/getCategory", method = RequestMethod.GET)
+    public @ResponseBody Iterable<Category> getCategoryName(@RequestParam Integer id){
+        List<Category> categories = new ArrayList<Category>();
+
+        if(getFilmByID(id).isPresent()){
+           Film film = getFilmByID(id).get();
+           Set<FilmCategory> filmCategorySet = film.getCategorySet();
+
+           if(!filmCategorySet.isEmpty()){
+
+                for(FilmCategory fc : filmCategorySet){
+                    Category category = fc.getCategoryCat();
+                    categories.add(category);
+                }
+           }
+        }
+
+        return categories;
+    }
 }
