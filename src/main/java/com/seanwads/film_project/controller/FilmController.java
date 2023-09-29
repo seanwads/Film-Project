@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.SecureRandom;
 import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -17,7 +18,7 @@ public class FilmController {
     @Autowired
     private FilmRepository filmRepository;
 
-    Random random = new Random();
+    SecureRandom random = new SecureRandom();
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
@@ -42,7 +43,8 @@ public class FilmController {
         List<Film> filmSelect = new ArrayList<>();
 
         if(getFilmByID(id).isPresent()){
-            filmSelect.add(getFilmByID(id).get());
+            Film film = getFilmByID(id).get();
+            filmSelect.add(film);
         }
 
         return filmSelect;
