@@ -59,10 +59,10 @@ public class FilmController {
         else {
 
             Iterable<Film> filmIterable = getAllFilms();
-            List<Film> filmList = new ArrayList<Film>();
+            List<Film> filmList = new ArrayList<>();
             filmIterable.forEach(filmList::add);
 
-            List<Film> filmsToRemove = new ArrayList<Film>();
+            List<Film> filmsToRemove = new ArrayList<>();
 
             for (Film film : filmList) {
 
@@ -92,10 +92,10 @@ public class FilmController {
     @RequestMapping(path="/filterFilmsByRating", method = RequestMethod.GET)
     public @ResponseBody Iterable<Film> filterFilmsByRating(@RequestParam Rating rating){
         Iterable<Film> filmIterable = getAllFilms();
-        List<Film> filmList = new ArrayList<Film>();
+        List<Film> filmList = new ArrayList<>();
         filmIterable.forEach(filmList::add);
 
-        List<Film> filmsToRemove = new ArrayList<Film>();
+        List<Film> filmsToRemove = new ArrayList<>();
 
         for(Film film : filmList) {
             if(film.getRating() != rating){
@@ -155,7 +155,7 @@ public class FilmController {
 
     @RequestMapping(path="/getCategory", method = RequestMethod.GET)
     public @ResponseBody Iterable<Category> getCategoryName(@RequestParam Integer id){
-        List<Category> categories = new ArrayList<Category>();
+        List<Category> categories = new ArrayList<>();
 
         if(getFilmByID(id).isPresent()) {
             Film film = getFilmByID(id).get();

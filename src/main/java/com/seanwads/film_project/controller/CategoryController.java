@@ -1,13 +1,8 @@
 package com.seanwads.film_project.controller;
 
-import com.seanwads.film_project.model.Category;
-import com.seanwads.film_project.repository.CategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Optional;
 
@@ -16,14 +11,4 @@ import java.util.Optional;
 @RequestMapping("/demo")
 public class CategoryController {
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    @RequestMapping(path = "/getCategories", method = RequestMethod.GET)
-    private @ResponseBody Iterable<Category> getCategories(){
-        return categoryRepository.findAll();
-    }
-
-    @RequestMapping(path = "/getCatByID", method = RequestMethod.GET)
-    private @ResponseBody Optional<Category> getCategoryById(Integer id) {return categoryRepository.findById(id);}
 }
