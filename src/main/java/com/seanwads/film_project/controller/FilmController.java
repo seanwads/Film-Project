@@ -26,6 +26,28 @@ public class FilmController {
     @RequestMapping(path = "/getFilmByID", method = RequestMethod.GET)
     public @ResponseBody Optional<Film> getFilmByID(@RequestParam Integer id) {return filmRepository.findById(id);}
 
+    @RequestMapping(path = "/getRandomFilm", method = RequestMethod.GET)
+    public @ResponseBody Iterable<Film> getRandomFilm() {
+        Random random = new Random();
+
+        Iterable<Film> totalFilms= getAllFilms();
+        int filmCount = 0;
+        for(Film film: totalFilms){
+            filmCount ++;
+        }
+
+        Integer id = random.nextInt(filmCount);
+
+        if(getFilmByID(id).isPresent()){
+            List<Film> filmSelect = new ArrayList<>();
+            filmSelect.add(getFilmByID(id).get());
+            return filmSelect;
+        }
+        else{
+            return null;
+        }
+    }
+
     @RequestMapping(path = "/filterFilmsByCategory", method = RequestMethod.GET)
     public @ResponseBody Iterable<Film> filterFilmByCat(@RequestParam Integer id) {
 

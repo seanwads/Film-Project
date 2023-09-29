@@ -239,4 +239,20 @@ class FilmControllerTest {
                 .andExpect(jsonPath("$[0].film_id").value(1))
                 .andExpect(jsonPath("$", hasSize(1)));
     }
+
+    @Test
+    void testGetRandomFilm() throws Exception {
+        Integer id = 1;
+        Film film = new Film(id, "ABSOLUTE DINOSAUR", "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies", 2006, 1);
+
+        List<Film> filmList = new ArrayList<>();
+        filmList.add(film);
+
+        when(filmRepository.findAll()).thenReturn(filmList);
+        when(filmRepository.findById(any())).thenReturn(Optional.of(film));
+
+        mockMvc.perform(get("/getRandomFilm")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].film_id").value(id));
+    }
 }
