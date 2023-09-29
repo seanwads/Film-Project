@@ -10,13 +10,13 @@ class FilmActorPKTest {
     void setFilmId() {
         FilmActorPK pk = new FilmActorPK();
         pk.setFilmId(1);
-        assertEquals(pk.getFilmId(), 1);
+        assertEquals(1, pk.getFilmId());
     }
 
     @Test
     void setActorId() {
         FilmActorPK pk = new FilmActorPK();
         pk.setActorId(1);
-        assertEquals(pk.getActorId(), 1);
+        assertEquals(1, pk.getActorId());
     }
 }

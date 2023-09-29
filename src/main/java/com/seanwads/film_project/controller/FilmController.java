@@ -73,7 +73,7 @@ public class FilmController {
                 for (FilmCategory filmCat : filmCategories) {
                     Category category = filmCat.getCategoryCat();
 
-                    if (category.getCategory_id() == id ) {
+                    if (category.getCategoryId() == id ) {
                         hasFilterCategory = true;
                     }
                 }

@@ -16,91 +16,91 @@ class FilmTest {
     void setFilm_id() {
         Film film = new Film();
         film.setFilmId(1);
-        assertEquals(film.getFilmId(), 1);
+        assertEquals(1, film.getFilmId());
     }
 
     @Test
     void setTitle() {
         Film film = new Film();
         film.setTitle("title");
-        assertEquals(film.getTitle(), "title");
+        assertEquals("title", film.getTitle());
     }
 
     @Test
     void setDescription() {
         Film film = new Film();
         film.setDescription("desc");
-        assertEquals(film.getDescription(), "desc");
+        assertEquals("desc", film.getDescription());
     }
 
     @Test
     void setReleaseYear() {
         Film film = new Film();
         film.setReleaseYear(2023);
-        assertEquals(film.getReleaseYear(), 2023);
+        assertEquals(2023, film.getReleaseYear());
     }
 
     @Test
     void setLanguageId() {
         Film film = new Film();
         film.setLanguageId(1);
-        assertEquals(film.getLanguageId(), 1);
+        assertEquals(1, film.getLanguageId());
     }
 
     @Test
     void setOriginalLanguageId() {
         Film film = new Film();
         film.setOriginalLanguageId(1);
-        assertEquals(film.getOriginalLanguageId(), 1);
+        assertEquals(1, film.getOriginalLanguageId());
     }
 
     @Test
     void setRentalDuration() {
         Film film = new Film();
         film.setRentalDuration(1);
-        assertEquals(film.getRentalDuration(), 1);
+        assertEquals(1, film.getRentalDuration());
     }
 
     @Test
     void setRentalRate() {
         Film film = new Film();
         film.setRentalRate(1.50);
-        assertEquals(film.getRentalRate(), 1.50);
+        assertEquals(1.50, film.getRentalRate());
     }
 
     @Test
     void setLength() {
         Film film = new Film();
         film.setLength(1);
-        assertEquals(film.getLength(), 1);
+        assertEquals(1, film.getLength());
     }
 
     @Test
     void setReplacementCost() {
         Film film = new Film();
         film.setReplacementCost(1.50);
-        assertEquals(film.getReplacementCost(), 1.50);
+        assertEquals(1.50, film.getReplacementCost());
     }
 
     @Test
     void setRating() {
         Film film = new Film();
         film.setRating(Rating.R);
-        assertEquals(film.getRating(), Rating.R);
+        assertEquals(Rating.R, film.getRating());
     }
 
     @Test
     void setSpecialFeatures() {
         Film film = new Film();
         film.setSpecialFeatures("Subtitles");
-        assertEquals(film.getSpecialFeatures(), "Subtitles");
+        assertEquals("Subtitles", film.getSpecialFeatures());
     }
 
     @Test
     void setLastUpdate() {
         Film film = new Film();
         film.setLastUpdate(Time.valueOf(LocalTime.now()));
-        assertEquals(film.getLastUpdate(), Time.valueOf(LocalTime.now()));
+        assertEquals(Time.valueOf(LocalTime.now()), film.getLastUpdate());
     }
 
     @Test
@@ -109,7 +109,7 @@ class FilmTest {
         Set<FilmCategory> set = new HashSet<>(List.of(filmCategory));
         Film film = new Film();
         film.setCategorySet(set);
-        assertEquals(film.getCategorySet(), set);
+        assertEquals(set, film.getCategorySet());
     }
 
     @Test
@@ -118,7 +118,7 @@ class FilmTest {
         Set<FilmActor> set = new HashSet<>(List.of(actor));
         Film film = new Film();
         film.setActors(set);
-        assertEquals(film.getActors(), set);
+        assertEquals(set, film.getActors());
     }
 
     @Test

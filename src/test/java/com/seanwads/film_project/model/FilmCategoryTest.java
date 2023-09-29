@@ -14,7 +14,7 @@ class FilmCategoryTest {
         FilmCategory filmCategory = new FilmCategory();
         Category category = new Category();
         filmCategory.setCategoryCat(category);
-        assertEquals(filmCategory.getCategoryCat(), category);
+        assertEquals(category, filmCategory.getCategoryCat());
     }
 
     @Test
@@ -22,7 +22,7 @@ class FilmCategoryTest {
         FilmCategory filmCategory = new FilmCategory();
         Film film = new Film();
         filmCategory.setFilmCat(film);
-        assertEquals(filmCategory.getFilmCat(), film);
+        assertEquals(film, filmCategory.getFilmCat());
     }
 
     @Test
@@ -30,13 +30,13 @@ class FilmCategoryTest {
         FilmCategory filmCategory = new FilmCategory();
         FilmCategoryPK pk = new FilmCategoryPK();
         filmCategory.setId(pk);
-        assertEquals(filmCategory.getId(), pk);
+        assertEquals(pk, filmCategory.getId());
     }
 
     @Test
     void setLastUpdate() {
         FilmCategory filmCategory = new FilmCategory();
         filmCategory.setLastUpdate(Time.valueOf(LocalTime.now()));
-        assertEquals(filmCategory.getLastUpdate(), Time.valueOf(LocalTime.now()));
+        assertEquals(Time.valueOf(LocalTime.now()), filmCategory.getLastUpdate());
     }
 }

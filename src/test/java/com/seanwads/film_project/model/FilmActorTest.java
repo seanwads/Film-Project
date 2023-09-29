@@ -11,7 +11,7 @@ class FilmActorTest {
         FilmActor filmActor = new FilmActor();
         FilmActorPK pk = new FilmActorPK();
         filmActor.setId(pk);
-        assertEquals(filmActor.getId(), pk);
+        assertEquals(pk,filmActor.getId());
     }
 
     @Test
@@ -19,7 +19,7 @@ class FilmActorTest {
         FilmActor filmActor = new FilmActor();
         Film film = new Film();
         filmActor.setFilm(film);
-        assertEquals(filmActor.getFilm(), film);
+        assertEquals(film, filmActor.getFilm());
     }
 
     @Test
@@ -27,6 +27,6 @@ class FilmActorTest {
         FilmActor filmActor = new FilmActor();
         Actor actor = new Actor();
         filmActor.setActor(actor);
-        assertEquals(filmActor.getActor(), actor);
+        assertEquals(actor, filmActor.getActor());
     }
 }

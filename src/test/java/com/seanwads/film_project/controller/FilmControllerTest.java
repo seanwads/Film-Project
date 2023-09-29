@@ -88,9 +88,9 @@ class FilmControllerTest {
     @Test
     void testFilterFilm() throws Exception {
         Category action = new Category();
-        action.setCategory_id(1);
+        action.setCategoryId(1);
         Category family = new Category();
-        family.setCategory_id(2);
+        family.setCategoryId(2);
 
         Film film1 = new Film(1, "ACTION FILM", "action film", 2023, 1);
         Film film2 = new Film(2, "FAMILY FILM", "family film", 2023, 1);
@@ -202,7 +202,7 @@ class FilmControllerTest {
     void testGetCategoryNameSuccessful() throws Exception {
         Integer id = 1;
         Category action = new Category();
-        action.setCategory_id(1);
+        action.setCategoryId(1);
 
         Film film= new Film(id, "ACTION FILM", "action film", 2023, 1);
 

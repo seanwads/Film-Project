@@ -10,13 +10,13 @@ class FilmCategoryPKTest {
     void setFilm_id() {
         FilmCategoryPK pk = new FilmCategoryPK();
         pk.setFilm_id(1);
-        assertEquals(pk.getFilm_id(), 1);
+        assertEquals(1, pk.getFilm_id());
     }
 
     @Test
     void setCategory_id() {
         FilmCategoryPK pk = new FilmCategoryPK();
         pk.setCategory_id(1);
-        assertEquals(pk.getCategory_id(), 1);
+        assertEquals(1, pk.getCategory_id());
     }
 }

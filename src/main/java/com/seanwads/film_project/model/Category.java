@@ -14,7 +14,7 @@ import java.util.Set;
 public class Category {
     @Id
     @Column(name="category_id")
-    private Integer category_id;
+    private Integer categoryId;
 
     @Column(name="name")
     private String name;
@@ -27,8 +27,8 @@ public class Category {
     private Set<FilmCategory> filmSet = new HashSet<>();
 
 
-    public void setCategory_id(Integer category_id) {
-        this.category_id = category_id;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     public void setName(String name) {

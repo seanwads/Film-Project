@@ -10,6 +10,6 @@ class ActorTest {
     void setId() {
         Actor actor = new Actor();
         actor.setId(1);
-        assertEquals(actor.getId(), 1);
+        assertEquals(1, actor.getId());
     }
 }

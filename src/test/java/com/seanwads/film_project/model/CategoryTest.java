@@ -15,22 +15,22 @@ class CategoryTest {
     @Test
     void setCategory_id() {
         Category cat = new Category();
-        cat.setCategory_id(1);
-        assertEquals(cat.getCategory_id(), 1);
+        cat.setCategoryId(1);
+        assertEquals(1, cat.getCategoryId());
     }
 
     @Test
     void setName() {
         Category cat = new Category();
         cat.setName("name");
-        assertEquals(cat.getName(), "name");
+        assertEquals("name", cat.getName());
     }
 
     @Test
     void setLastUpdate() {
         Category cat = new Category();
         cat.setLastUpdate(Time.valueOf(LocalTime.now()));
-        assertEquals(cat.getLastUpdate(), Time.valueOf(LocalTime.now()));
+        assertEquals(Time.valueOf(LocalTime.now()), cat.getLastUpdate());
     }
 
     @Test
@@ -39,6 +39,6 @@ class CategoryTest {
         Set<FilmCategory> set = new HashSet<>(List.of(filmCategory));
         Category cat = new Category();
         cat.setFilmSet(set);
-        assertEquals(cat.getFilmSet(), set);
+        assertEquals(set, cat.getFilmSet());
     }
 }
