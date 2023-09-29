@@ -17,6 +17,9 @@ public class FilmController {
     @Autowired
     private FilmRepository filmRepository;
 
+    Random random = new Random();
+
+
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public @ResponseBody Iterable<Film> defaultMethod() {return filmRepository.findAll();}
 
@@ -28,8 +31,6 @@ public class FilmController {
 
     @RequestMapping(path = "/getRandomFilm", method = RequestMethod.GET)
     public @ResponseBody Iterable<Film> getRandomFilm() {
-        Random random = new Random();
-
         Iterable<Film> totalFilms= getAllFilms();
         int filmCount = 0;
         for(Film film: totalFilms){
@@ -38,14 +39,13 @@ public class FilmController {
 
         Integer id = random.nextInt(filmCount);
 
+        List<Film> filmSelect = new ArrayList<>();
+
         if(getFilmByID(id).isPresent()){
-            List<Film> filmSelect = new ArrayList<>();
             filmSelect.add(getFilmByID(id).get());
-            return filmSelect;
         }
-        else{
-            return null;
-        }
+
+        return filmSelect;
     }
 
     @RequestMapping(path = "/filterFilmsByCategory", method = RequestMethod.GET)
