@@ -42,8 +42,8 @@ class FilmControllerTest {
 
         mockMvc.perform(get("/allFilms")
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].film_id").value(film1.getFilm_id()))
-                .andExpect(jsonPath("$[1].film_id").value(film2.getFilm_id()))
+                .andExpect(jsonPath("$[0].filmId").value(film1.getFilmId()))
+                .andExpect(jsonPath("$[1].filmId").value(film2.getFilmId()))
                 .andExpect(jsonPath("$[0].title").value(film1.getTitle()))
                 .andExpect(jsonPath("$[1].title").value(film2.getTitle()))
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -59,7 +59,7 @@ class FilmControllerTest {
         when(filmRepository.findById(id)).thenReturn(Optional.of(film));
 
         mockMvc.perform(get("/getFilmByID?id=1").accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.film_id").value(film.getFilm_id()))
+                .andExpect(jsonPath("$.filmId").value(film.getFilmId()))
                 .andExpect(jsonPath("$.title").value(film.getTitle()))
                 .andExpect(jsonPath("$.description").value(film.getDescription()))
                 .andExpect(jsonPath("$.releaseYear").value(film.getReleaseYear()))
@@ -79,8 +79,8 @@ class FilmControllerTest {
         when(filmRepository.findAll()).thenReturn(films);
 
         mockMvc.perform(get("/filterFilmsByCategory?id=0").accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].film_id").value(film1.getFilm_id()))
-                .andExpect(jsonPath("$[1].film_id").value(film2.getFilm_id()))
+                .andExpect(jsonPath("$[0].filmId").value(film1.getFilmId()))
+                .andExpect(jsonPath("$[1].filmId").value(film2.getFilmId()))
                 .andExpect(jsonPath("$", hasSize(2)));
 
     }
@@ -153,7 +153,7 @@ class FilmControllerTest {
 
         mockMvc.perform(post("/createFilm")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"film_id\": 1, " +
+                .content("{\"filmId\": 1, " +
                         "\"title\": \"ABSOLUTE DINOSAUR\", " +
                         "\"description\": \"A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies\", " +
                         "\"releaseYear\": 2006, " +
@@ -172,13 +172,13 @@ class FilmControllerTest {
 
         mockMvc.perform(put("/updateFilm")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"film_id\": 1, " +
+                .content("{\"filmId\": 1, " +
                         "\"title\": \"ABSOLUTE DINOSAUR\", " +
                         "\"description\": \"A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies\", " +
                         "\"releaseYear\": 2006, " +
                         "\"languageId\": 1}")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.film_id").value(film.getFilm_id()));
+                .andExpect(jsonPath("$.filmId").value(film.getFilmId()));
     }
 
     @Test
@@ -189,7 +189,7 @@ class FilmControllerTest {
 
         mockMvc.perform(put("/updateFilm")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"film_id\": 1, " +
+                .content("{\"filmId\": 1, " +
                         "\"title\": \"ABSOLUTE DINOSAUR\", " +
                         "\"description\": \"A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies\", " +
                         "\"releaseYear\": 2006, " +
@@ -234,7 +234,7 @@ class FilmControllerTest {
 
         mockMvc.perform(get("/filterFilmsByRating?rating=PG")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].film_id").value(1))
+                .andExpect(jsonPath("$[0].filmId").value(1))
                 .andExpect(jsonPath("$", hasSize(1)));
     }
 
@@ -251,6 +251,6 @@ class FilmControllerTest {
 
         mockMvc.perform(get("/getRandomFilm")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].film_id").value(id));
+                .andExpect(jsonPath("$[0].filmId").value(id));
     }
 }

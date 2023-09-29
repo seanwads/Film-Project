@@ -14,7 +14,7 @@ import java.util.Set;
 public class Film {
 
     public Film(Integer film_id, String title, String description, Integer releaseYear, Integer languageId){
-        setFilm_id(film_id);
+        setFilmId(film_id);
         setTitle(title);
         setDescription(description);
         setReleaseYear(releaseYear);
@@ -27,7 +27,7 @@ public class Film {
 
     @Id
     @Column(name="film_id")
-    private Integer film_id;
+    private Integer filmId;
 
     @Column(name = "title")
     private String title;
@@ -75,8 +75,8 @@ public class Film {
     private Set<FilmActor> actors;
 
 
-    public void setFilm_id(Integer film_id) {
-        this.film_id = film_id;
+    public void setFilmId(Integer filmId) {
+        this.filmId = filmId;
     }
 
 

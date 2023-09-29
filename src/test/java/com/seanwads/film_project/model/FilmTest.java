@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Time;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,8 +15,8 @@ class FilmTest {
     @Test
     void setFilm_id() {
         Film film = new Film();
-        film.setFilm_id(1);
-        assertEquals(film.getFilm_id(), 1);
+        film.setFilmId(1);
+        assertEquals(film.getFilmId(), 1);
     }
 
     @Test
@@ -127,7 +126,7 @@ class FilmTest {
         Film film = new Film(1, "title", "desc", 2023, 1);
 
         assertAll(
-                () -> assertEquals(film.getFilm_id(), 1),
+                () -> assertEquals(film.getFilmId(), 1),
                 () -> assertEquals(film.getTitle(), "title"),
                 () -> assertEquals(film.getDescription(), "desc"),
                 () -> assertEquals(film.getReleaseYear(), 2023),

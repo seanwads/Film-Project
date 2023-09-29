@@ -123,9 +123,9 @@ public class FilmController {
     @RequestMapping(path="/createFilm", method = RequestMethod.POST)
     public @ResponseBody Optional<Film> createFilm(@RequestBody Film filmParam){
         try{
-            Film film = filmRepository.save(new Film(filmParam.getFilm_id(), filmParam.getTitle(), filmParam.getDescription(), filmParam.getReleaseYear(), filmParam.getLanguageId()));
+            Film film = filmRepository.save(new Film(filmParam.getFilmId(), filmParam.getTitle(), filmParam.getDescription(), filmParam.getReleaseYear(), filmParam.getLanguageId()));
 
-            if(getFilmByID(film.getFilm_id()).isPresent()){
+            if(getFilmByID(film.getFilmId()).isPresent()){
                 return Optional.of(film);
             }
             else{
@@ -139,7 +139,7 @@ public class FilmController {
 
     @RequestMapping(path="/updateFilm", method = RequestMethod.PUT)
     public @ResponseBody Optional<Film> updateFilm(@RequestBody Film filmParam){
-        Optional<Film> filmOptional = getFilmByID(filmParam.getFilm_id());
+        Optional<Film> filmOptional = getFilmByID(filmParam.getFilmId());
 
         if(filmOptional.isPresent()){
             Film film = filmOptional.get();
